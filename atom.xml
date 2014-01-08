@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Journal of a Hacker]]></title>
+  <link href="http://swanandp.github.io/atom.xml" rel="self"/>
+  <link href="http://swanandp.github.io/"/>
+  <updated>2014-01-08T14:41:02+05:30</updated>
+  <id>http://swanandp.github.io/</id>
+  <author>
+    <name><![CDATA[Swanand Pagnis]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+</feed>
