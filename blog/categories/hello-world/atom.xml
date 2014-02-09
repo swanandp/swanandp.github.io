@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: hello-world | Journal of a Hacker]]></title>
+  <title><![CDATA[Category: hello-world | Swanand Pagnis]]></title>
   <link href="http://swanandp.github.io/blog/categories/hello-world/atom.xml" rel="self"/>
   <link href="http://swanandp.github.io/"/>
-  <updated>2014-01-11T16:58:56+05:30</updated>
+  <updated>2014-02-10T00:35:58+05:30</updated>
   <id>http://swanandp.github.io/</id>
   <author>
     <name><![CDATA[Swanand Pagnis]]></name>

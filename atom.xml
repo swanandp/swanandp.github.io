@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Journal of a Hacker]]></title>
+  <title><![CDATA[Swanand Pagnis]]></title>
   <link href="http://swanandp.github.io/atom.xml" rel="self"/>
   <link href="http://swanandp.github.io/"/>
-  <updated>2014-01-11T16:58:56+05:30</updated>
+  <updated>2014-02-10T00:35:58+05:30</updated>
   <id>http://swanandp.github.io/</id>
   <author>
     <name><![CDATA[Swanand Pagnis]]></name>
@@ -12,6 +12,25 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[I am speaking at RubyConf India]]></title>
+    <link href="http://swanandp.github.io/blog/2014/02/09/i-am-speaking-at-rubyconf-india/"/>
+    <updated>2014-02-09T23:45:07+05:30</updated>
+    <id>http://swanandp.github.io/blog/2014/02/09/i-am-speaking-at-rubyconf-india</id>
+    <content type="html"><![CDATA[<p><a href="http://rubyconfindia.org/2014">India&rsquo;s premier Ruby conference</a> is happening at Goa this year, in the third week of March.  This year, my talk proposal got accepted and I am up on <a href="http://rubyconfindia2014.busyconf.com/schedule#activity_52cce8d8852da40010000095">day 1 at 2.30pm</a>.</p>
+
+<p>I&rsquo;ve been digging into real time web applications for the last few months and SSE (Server Sent Events) and WebRTC caught my attention.  <a href="http://pusher.com/">Pusher</a>, a fantastic service that allows you easily implement a pub/sub model in your application, uses SSE as a transport.  And <a href="http://www.webrtc.org/">WebRTC</a> is a recent addition to the fore. Well, not so recent, as Google open sourced it in 2011.  A standard API is currently being drafted by the W3C.</p>
+
+<p>These technologies allow two-way communication between server and client and you no longer have to depend on polling to update the clients.  There are arguments that this breaks the hypermedia agreement, and is harder to scale than traditional stateless Request/Response style of serving web resources.  I haven&rsquo;t yet formed an opinion on this, because I am clearly blinded by the awesomeness and ease of using these technologies.</p>
+
+<p>In my talk I aim to introduce the concepts to the audience and then follow it up with code examples and best practises.  As most of the audience would be interested hear about Rails integration, I will cover all examples in the Rails context.  If you are going to be there, do read the Wikipedia page of the involved concepts and then come to the talk, I am certain you will gain a lot more this way.</p>
+
+<p>Oh and I forgot to mention, RubyConfIndia offers these awesome badge:</p>
+
+<p><a href="http://rubyconfindia.org/"><img src="http://rubyconfindia.org/2014/images/badges/180/speaker.png"></a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hello, world!]]></title>
