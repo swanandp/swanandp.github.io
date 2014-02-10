@@ -4,7 +4,7 @@
   <title><![CDATA[Swanand Pagnis]]></title>
   <link href="http://swanandp.github.io/atom.xml" rel="self"/>
   <link href="http://swanandp.github.io/"/>
-  <updated>2014-02-10T00:35:58+05:30</updated>
+  <updated>2014-02-10T17:00:30+05:30</updated>
   <id>http://swanandp.github.io/</id>
   <author>
     <name><![CDATA[Swanand Pagnis]]></name>
@@ -26,7 +26,7 @@
 
 <p>In my talk I aim to introduce the concepts to the audience and then follow it up with code examples and best practises.  As most of the audience would be interested hear about Rails integration, I will cover all examples in the Rails context.  If you are going to be there, do read the Wikipedia page of the involved concepts and then come to the talk, I am certain you will gain a lot more this way.</p>
 
-<p>Oh and I forgot to mention, RubyConfIndia offers these awesome badge:</p>
+<p>Oh and I forgot to mention, RubyConfIndia offers this awesome badge:</p>
 
 <p><a href="http://rubyconfindia.org/"><img src="http://rubyconfindia.org/2014/images/badges/180/speaker.png"></a></p>
 ]]></content>
