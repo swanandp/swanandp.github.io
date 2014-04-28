@@ -5,7 +5,7 @@
 	<script data-cfasync="false" type="text/javascript" src="//use.typekit.net/axj3cfp.js"></script>
 	<script data-cfasync="false" type="text/javascript">try{Typekit.load();}catch(e){}</script>
 	<meta charset="utf-8">
-	<title>Essays, Blogs, Rants and Experiences  | Swanand Pagnis</title>
+	<title>Console your gems: Add REPL to them  | Swanand Pagnis</title>
 
 <meta name="author" content="Swanand Pagnis"> 
 
@@ -93,18 +93,9 @@ $(document).ready(
 
 </header>
 
-	<div id="content" class="inner">
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/04/28/console-repl-for-your-gems/">
-		
-			Console Your Gems: Add REPL to Them</a>
-	</h2>
-	<div class="entry-content">
-		<p>When you are working on a Ruby gem or a Ruby library ( why you would have a Ruby library that isn&rsquo;t a gem is beyond me ), it is <s>always</s> often desirable to have a Pry session loaded with the gem your working on.  In fact, I&rsquo;ll go out on a limb and say that REPL driven development is a a must-do when writing libraries.  REPLs are like ice added to your beer when it isn&rsquo;t cold anymore, except this ice is made from the same beer.</p>
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Console Your Gems: Add REPL to Them</h2>
+	<div class="entry-content"><p>When you are working on a Ruby gem or a Ruby library ( why you would have a Ruby library that isn&rsquo;t a gem is beyond me ), it is <s>always</s> often desirable to have a Pry session loaded with the gem your working on.  In fact, I&rsquo;ll go out on a limb and say that REPL driven development is a a must-do when writing libraries.  REPLs are like ice added to your beer when it isn&rsquo;t cold anymore, except this ice is made from the same beer.</p>
 
 <p>A lot of gems ship with this functionality, but if not, it is extremely easy to add one.  To avoid polluting every gem with our code, we can utilize the concept of Rake&rsquo;s global tasks.  Rake&rsquo;s default source for looking at tasks or <span title="Google it">rules</span> is the Rakefile and all files that are declared as source files in the Rakefile; typically <code>*.rake</code> files in your tasks folder, but this can vary depending on your project.  However, rake also looks at <code>~/.rake/*.rake</code> if we ask it to. So let&rsquo;s create a file called <code>~/.rake/console.rake</code> and add the following task to it:</p>
 
@@ -184,10 +175,7 @@ $(document).ready(
 
 
 <p>With this, I bow out and promise to come back with more palatable content later.</p>
-
-		
-		
-	</div>
+</div>
 
 
 <div class="meta">
@@ -214,109 +202,30 @@ $(document).ready(
 
 
 	
-		<span class="comments"><a href="/blog/2014/04/28/console-repl-for-your-gems//index.html#disqus_thread">Comments</a></span>
+		<span class="comments"><a href="/blog/2014/04/28/console-repl-for-your-gems/#disqus_thread">Comments</a></span>
 	
 </div></article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/02/09/i-am-speaking-at-rubyconf-india/">
-		
-			I Am Speaking at RubyConf India</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://rubyconfindia.org/2014">India&rsquo;s premier Ruby conference</a> is happening at Goa this year, in the third week of March.  This year, my talk proposal got accepted and I am up on <a href="http://rubyconfindia2014.busyconf.com/schedule#activity_52cce8d8852da40010000095">day 1 at 2.30pm</a>.</p>
-
-<p>I&rsquo;ve been digging into real time web applications for the last few months and SSE (Server Sent Events) and WebRTC caught my attention.  <a href="http://pusher.com/">Pusher</a>, a fantastic service that allows you easily implement a pub/sub model in your application, uses SSE as a transport.  And <a href="http://www.webrtc.org/">WebRTC</a> is a recent addition to the fore. Well, not so recent, as Google open sourced it in 2011.  A standard API is currently being drafted by the W3C.</p>
-
-<p>These technologies allow two-way communication between server and client and you no longer have to depend on polling to update the clients.  There are arguments that this breaks the hypermedia agreement, and is harder to scale than traditional stateless Request/Response style of serving web resources.  I haven&rsquo;t yet formed an opinion on this, because I am clearly blinded by the awesomeness and ease of using these technologies.</p>
-
-<p>In my talk I aim to introduce the concepts to the audience and then follow it up with code examples and best practises.  As most of the audience would be interested hear about Rails integration, I will cover all examples in the Rails context.  If you are going to be there, do read the Wikipedia page of the involved concepts and then come to the talk, I am certain you will gain a lot more this way.</p>
-
-<p>Oh and I forgot to mention, RubyConfIndia offers this awesome badge:</p>
-
-<p><a href="http://rubyconfindia.org/"><img src="http://rubyconfindia.org/2014/images/badges/180/speaker.png"></a></p>
-
-		
-		
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+<!---	<a class="addthis_counter addthis_pill_style"></a> --->
 	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-02-09T23:45:07+05:30" pubdate data-updated="true">Feb 9<span>th</span>, 2014</time></div>
-	
-
-
-	
-		<span class="comments"><a href="/blog/2014/02/09/i-am-speaking-at-rubyconf-india//index.html#disqus_thread">Comments</a></span>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/01/08/hello/">
-		
-			Hello, World!</a>
-	</h2>
-	<div class="entry-content">
-		<p>Wikipedia tells us:</p>
-
-<blockquote><p>A &ldquo;Hello World&rdquo; program has become the traditional first program that many people learn. In general, it is simple enough so that people who have no experience with computer programming can easily understand it, especially with the guidance of a teacher or a written guide. Using this simple program as a basis, computer science principles or elements of a specific programming language can be explained to novice programmers. Experienced programmers learning new languages can also gain a lot of information about a given language&rsquo;s syntax and structure from a hello world program.</p></blockquote>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-08T14:49:26+05:30" pubdate data-updated="true">Jan 8<span>th</span>, 2014</time></div>
-	
-
-<div class="tags">
-
-	<a class='category' href='/blog/categories/hello-world/'>hello-world</a>
-
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
 </div>
 
 
-	
-		<span class="comments"><a href="/blog/2014/01/08/hello//index.html#disqus_thread">Comments</a></span>
-	
-</div></article>
 
-<nav id="pagenavi">
-    
-    
-    <div class="center"><a href="/archives">Blog Archives</a></div>
-</nav></div>
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
 	<footer id="footer" class="inner">Copyright &copy; 2014
 
     Swanand Pagnis
@@ -337,7 +246,10 @@ Powered by Octopress.
       var disqus_shortname = 'pagnis';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://swanandp.github.io/blog/2014/04/28/console-repl-for-your-gems/';
+        var disqus_url = 'http://swanandp.github.io/blog/2014/04/28/console-repl-for-your-gems/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

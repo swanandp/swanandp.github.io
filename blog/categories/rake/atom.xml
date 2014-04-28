@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: rake | Swanand Pagnis]]></title>
+  <link href="http://swanandp.github.io/blog/categories/rake/atom.xml" rel="self"/>
+  <link href="http://swanandp.github.io/"/>
+  <updated>2014-04-28T13:56:38+05:30</updated>
+  <id>http://swanandp.github.io/</id>
+  <author>
+    <name><![CDATA[Swanand Pagnis]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Console your gems: Add REPL to them]]></title>
+    <link href="http://swanandp.github.io/blog/2014/04/28/console-repl-for-your-gems/"/>
+    <updated>2014-04-28T12:27:34+05:30</updated>
+    <id>http://swanandp.github.io/blog/2014/04/28/console-repl-for-your-gems</id>
+    <content type="html"><![CDATA[<p>When you are working on a Ruby gem or a Ruby library ( why you would have a Ruby library that isn&rsquo;t a gem is beyond me ), it is <s>always</s> often desirable to have a Pry session loaded with the gem your working on.  In fact, I&rsquo;ll go out on a limb and say that REPL driven development is a a must-do when writing libraries.  REPLs are like ice added to your beer when it isn&rsquo;t cold anymore, except this ice is made from the same beer.</p>
+
+<p>A lot of gems ship with this functionality, but if not, it is extremely easy to add one.  To avoid polluting every gem with our code, we can utilize the concept of Rake&rsquo;s global tasks.  Rake&rsquo;s default source for looking at tasks or <span title="Google it">rules</span> is the Rakefile and all files that are declared as source files in the Rakefile; typically <code>*.rake</code> files in your tasks folder, but this can vary depending on your project.  However, rake also looks at <code>~/.rake/*.rake</code> if we ask it to. So let&rsquo;s create a file called <code>~/.rake/console.rake</code> and add the following task to it:</p>
+
+<p>```ruby</p>
+
+<pre><code>desc "Open a pry (or irb) session preloaded with this gem"
+task :console do
+  begin
+    require 'pry'
+    gem_name = File.basename(Dir.pwd)
+    sh %{pry -I lib -r #{gem_name}.rb}
+  rescue LoadError =&gt; _
+    sh %{irb -rubygems -I lib -r #{gem_name}.rb}
+  end
+end
+</code></pre>
+
+<p>```</p>
+
+<p>And run our shiny new rake task:</p>
+
+<p>```</p>
+
+<pre><code>➜  awesome_sauce git:(master) ✗ rake console
+rake aborted!
+Don't know how to build task 'console'
+
+(See full trace by running task with --trace)
+</code></pre>
+
+<p>```</p>
+
+<p>Bummer! Let&rsquo;s double check:</p>
+
+<p>```</p>
+
+<pre><code>➜  awesome_sauce git:(master) ✗ rake -T console
+</code></pre>
+
+<p>```</p>
+
+<p>Nothing! What gives?  Not a cause of worry, because this is the expected behaviour, and we have a failing test. Rake takes global pollution quite seriously, and <em>does not</em> load the global tasks unless asked to.  So let&rsquo;s ask rake to do so, by adding a <code>-g</code> flag.  Because, you know, g for global:</p>
+
+<p>```</p>
+
+<pre><code>➜  awesome_sauce git:(master) ✗ rake -gT console
+rake console  # Open a pry (or irb) session preloaded with this gem
+</code></pre>
+
+<p>```</p>
+
+<p>And subsequently</p>
+
+<p>```</p>
+
+<pre><code>➜  awesome_sauce git:(master) ✗ rake -g console
+pry -I lib -r awesome_sauce.rb
+2.1.1 (main):0 &gt;
+# Just to be sure
+2.1.1 (main):0 &gt; ^D
+➜  awesome_sauce git:(master) ✗ cd ../secret_sauce
+➜  secret_sauce git:(hush-hush) ✗ rake -g console
+rbx-2.1.1 (main):0 &gt;
+</code></pre>
+
+<p>```</p>
+
+<p>With this, I bow out and promise to come back with more palatable content later.</p>
+]]></content>
+  </entry>
+  
+</feed>

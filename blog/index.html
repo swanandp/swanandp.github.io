@@ -9,7 +9,7 @@
 
 <meta name="author" content="Swanand Pagnis"> 
 
-<meta name="description" content="India&rsquo;s premier Ruby conference is happening at Goa this year, in the third week of March. This year, my talk proposal got accepted and I am &hellip;"> <meta name="keywords" content="">
+<meta name="description" content="When you are working on a Ruby gem or a Ruby library ( why you would have a Ruby library that isn&rsquo;t a gem is beyond me ), it is always often &hellip;"> <meta name="keywords" content="">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -94,6 +94,129 @@ $(document).ready(
 </header>
 
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/04/28/console-repl-for-your-gems/">
+		
+			Console Your Gems: Add REPL to Them</a>
+	</h2>
+	<div class="entry-content">
+		<p>When you are working on a Ruby gem or a Ruby library ( why you would have a Ruby library that isn&rsquo;t a gem is beyond me ), it is <s>always</s> often desirable to have a Pry session loaded with the gem your working on.  In fact, I&rsquo;ll go out on a limb and say that REPL driven development is a a must-do when writing libraries.  REPLs are like ice added to your beer when it isn&rsquo;t cold anymore, except this ice is made from the same beer.</p>
+
+<p>A lot of gems ship with this functionality, but if not, it is extremely easy to add one.  To avoid polluting every gem with our code, we can utilize the concept of Rake&rsquo;s global tasks.  Rake&rsquo;s default source for looking at tasks or <span title="Google it">rules</span> is the Rakefile and all files that are declared as source files in the Rakefile; typically <code>*.rake</code> files in your tasks folder, but this can vary depending on your project.  However, rake also looks at <code>~/.rake/*.rake</code> if we ask it to. So let&rsquo;s create a file called <code>~/.rake/console.rake</code> and add the following task to it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">desc</span> <span class="s2">&quot;Open a pry (or irb) session preloaded with this gem&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:console</span> <span class="k">do</span>
+</span><span class='line'>  <span class="k">begin</span>
+</span><span class='line'>    <span class="nb">require</span> <span class="s1">&#39;pry&#39;</span>
+</span><span class='line'>    <span class="n">gem_name</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="no">Dir</span><span class="o">.</span><span class="n">pwd</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">sh</span> <span class="sx">%{pry -I lib -r </span><span class="si">#{</span><span class="n">gem_name</span><span class="si">}</span><span class="sx">.rb}</span>
+</span><span class='line'>  <span class="k">rescue</span> <span class="no">LoadError</span> <span class="o">=&gt;</span> <span class="n">_</span>
+</span><span class='line'>    <span class="n">sh</span> <span class="sx">%{irb -rubygems -I lib -r </span><span class="si">#{</span><span class="n">gem_name</span><span class="si">}</span><span class="sx">.rb}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And run our shiny new rake task:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">➜</span>  <span class="n">awesome_sauce</span> <span class="ss">git</span><span class="p">:(</span><span class="n">master</span><span class="p">)</span> <span class="err">✗</span> <span class="n">rake</span> <span class="n">console</span>
+</span><span class='line'><span class="n">rake</span> <span class="n">aborted!</span>
+</span><span class='line'><span class="no">Don</span><span class="s1">&#39;t know how to build task &#39;</span><span class="n">console</span><span class="err">&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="no">See</span> <span class="n">full</span> <span class="n">trace</span> <span class="n">by</span> <span class="n">running</span> <span class="n">task</span> <span class="n">with</span> <span class="o">--</span><span class="n">trace</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Bummer! Let&rsquo;s double check:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">➜</span>  <span class="n">awesome_sauce</span> <span class="ss">git</span><span class="p">:(</span><span class="n">master</span><span class="p">)</span> <span class="err">✗</span> <span class="n">rake</span> <span class="o">-</span><span class="n">T</span> <span class="n">console</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nothing! What gives?  Not a cause of worry, because this is the expected behaviour, and we have a failing test. Rake takes global pollution quite seriously, and <em>does not</em> load the global tasks unless asked to.  So let&rsquo;s ask rake to do so, by adding a <code>-g</code> flag.  Because, you know, g for global:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">➜</span>  <span class="n">awesome_sauce</span> <span class="ss">git</span><span class="p">:(</span><span class="n">master</span><span class="p">)</span> <span class="err">✗</span> <span class="n">rake</span> <span class="o">-</span><span class="n">gT</span> <span class="n">console</span>
+</span><span class='line'><span class="n">rake</span> <span class="n">console</span>  <span class="c1"># Open a pry (or irb) session preloaded with this gem</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And subsequently</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">➜</span>  <span class="n">awesome_sauce</span> <span class="ss">git</span><span class="p">:(</span><span class="n">master</span><span class="p">)</span> <span class="err">✗</span> <span class="n">rake</span> <span class="o">-</span><span class="n">g</span> <span class="n">console</span>
+</span><span class='line'><span class="n">pry</span> <span class="o">-</span><span class="n">I</span> <span class="n">lib</span> <span class="o">-</span><span class="n">r</span> <span class="n">awesome_sauce</span><span class="o">.</span><span class="n">rb</span>
+</span><span class='line'><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mi">0</span> <span class="o">&gt;</span>
+</span><span class='line'><span class="c1"># Just to be sure</span>
+</span><span class='line'><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mi">0</span> <span class="o">&gt;</span> <span class="o">^</span><span class="n">D</span>
+</span><span class='line'><span class="err">➜</span>  <span class="n">awesome_sauce</span> <span class="ss">git</span><span class="p">:(</span><span class="n">master</span><span class="p">)</span> <span class="err">✗</span> <span class="n">cd</span> <span class="o">.</span><span class="n">.</span><span class="o">/</span><span class="n">secret_sauce</span>
+</span><span class='line'><span class="err">➜</span>  <span class="n">secret_sauce</span> <span class="ss">git</span><span class="p">:(</span><span class="n">hush</span><span class="o">-</span><span class="n">hush</span><span class="p">)</span> <span class="err">✗</span> <span class="n">rake</span> <span class="o">-</span><span class="n">g</span> <span class="n">console</span>
+</span><span class='line'><span class="n">rbx</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mi">0</span> <span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With this, I bow out and promise to come back with more palatable content later.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-28T12:27:34+05:30" pubdate data-updated="true">Apr 28<span>th</span>, 2014</time></div>
+	
+
+<div class="tags">
+
+	<a class='category' href='/blog/categories/rake/'>rake</a>, <a class='category' href='/blog/categories/repl/'>repl</a>
+
+</div>
+
+
+	
+		<span class="comments"><a href="/blog/2014/04/28/console-repl-for-your-gems//blog/index.html#disqus_thread">Comments</a></span>
+	
+</div></article>
 
 
     <article class="post">
