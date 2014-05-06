@@ -4,7 +4,7 @@
   <title><![CDATA[Swanand Pagnis]]></title>
   <link href="http://swanandp.github.io/atom.xml" rel="self"/>
   <link href="http://swanandp.github.io/"/>
-  <updated>2014-05-03T19:57:59+05:30</updated>
+  <updated>2014-05-06T12:54:32+05:30</updated>
   <id>http://swanandp.github.io/</id>
   <author>
     <name><![CDATA[Swanand Pagnis]]></name>
@@ -12,6 +12,43 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[10 actions you must internalize in your Editor]]></title>
+    <link href="http://swanandp.github.io/blog/2014/05/06/10-actions-you-must-internalize/"/>
+    <updated>2014-05-06T10:45:07+05:30</updated>
+    <id>http://swanandp.github.io/blog/2014/05/06/10-actions-you-must-internalize</id>
+    <content type="html"><![CDATA[<p>I say <em>10</em>, but, it could well be <em>16</em>.  The point is having a minimum viable list.</p>
+
+<p>We love our Emacs vs Vim vs &lt;others&gt; debates.  In one argument Emacs rocks, in another Vim wins the day and in some other, TextMate takes the cake.  However, more than we love our editors, we love being productive; after all that is all what this is about.  By now, we know that the joy of writing code is well augmented by a good editor. It acts like a great force multiplier.  We go to great lengths to curate the editor and it&rsquo;s configuration to what suits us.</p>
+
+<p>What happens when you want to use a different editor?  Or the same editor with different dotfiles?  They say that opening an editor and finding someone else&rsquo;s dotfiles is like going to bed and finding someone else&rsquo;s partener there.  From the outset, looks like an extremely awkward and uncomfortable experience. But, great if you were looking to switch.  So how do you learn an editor in order to be effective enough; enough being the keyword here?  The short answer to this is &ldquo;do the grunt work and put in the time&rdquo;.  However, I think all is not lost and learning a few actions as the first thing can save you a lot of time.  I often keep cheat sheet ready with these actions in order to build the required muscle memory.</p>
+
+<p>Now, this list is of course not complete.  A lot of things could be added to it or removed from it.  However, this is my recipe for quickly learning an editor.  And I would love to hear yours.  One thing to keep in mind is that this is not an exhaustive list of features that our editors must have.  No.  This is a list that we as programmers can use to quickly pass the learning curve of an editor.</p>
+
+<ol>
+<li><strong>Navigation within the file, moving around.</strong>  This is the most fundamental and the very first thing you&rsquo;ll probably do.  If in Emacs you can&rsquo;t C-n C-p C-f or C-b your way around, you&rsquo;ll feel exasperated soon.  So first thing to learn would be move the caret forward and backward.  There are different flavours to moving around:
+
+<ol>
+<li>One character at a time</li>
+<li>One word at a time</li>
+<li>One line at a time</li>
+<li>One paragraph at a time etc.</li>
+</ol>
+</li>
+<li><p><strong>Select, cut, copy and paste.</strong>  This comes naturally from Point 1.  Once you are able to move around, you would want to move text around.  Selecting text is also extremely important.  You don&rsquo;t have to use your mouse to actually select.  Selection is actually demarkation, and it works a scope.  Select a bunch of text and then perform an action only on that text.  I&rsquo;ll elaborate on this further down the list. <small> &lt;rant&gt; This ability is overrated and often superceded by others actions in the list. &lt;/rant&gt; </small></p></li>
+<li><p><strong>Duplicate, delete, move and displace lines and blocks.</strong>  When working with code, we often work with whole lines, rather than words or characters. Which is why this ability comes extremely handy.  It is best used while refactoring code or formating code.  I cannot stress how important this is.  Duplicating lines and them moving them around is indispensible.  Once you&rsquo;ve learned to use this well, I&rsquo;ll bet you would be uncomfortable without it.</p></li>
+<li><p><strong>Search and replace strings and regular expressions; scoped or not.</strong>  Search and replace, combined with text selection that acts as scope is an integral part of refactoring code.  When I think of S&amp;R, I think of renaming variables, functions, classes.  I think of upgrading from <code>:key =&gt; value</code> to <code>key: value</code>.  I think of upgrading from Bootstrap 2 to Bootstrap 3, where <code>span12</code> becomes <code>col-md-12</code>.  You get the point.  As a side note, if you are building an editor to learn something new, this can a fun feature to implement.  Go ahead and try if it suits you.</p></li>
+<li><p><strong>Quickly generate boilerplate code.</strong>  Once you are past the steeper part of the learning curve of a language technology, boilerplate manifests as the killer of you productivity and brings death to it by boredom. Unless, you have tuned your editor to snuff it out quickly.  Type <code>def&lt;tab&gt;</code> and boom, you have a method definition placeholder. <code>cla&lt;tab&gt;</code> and you have class declaration, <code>for&lt;tab&gt;</code> you have your block ready. etc. etc.  More than the terse languages like Ruby, Python, this will be more handy in verbose languages like Java, Objective C.</p></li>
+<li><p><strong>Quickly jump to recently used files. Jump to any file within the project in few keystrokes.</strong>  <code>Command+T</code> in TextMate <code>Control-P</code> in Vim etc.  When working on a project, the impact this feature can have is tremendous.  One of the best use cases is jumping to last file.  I often find that I typically work with 2 files at a time ( Model and the Controller or The presenter and the view, the header and the implementation, Model and its Tests etc. ).  So I need to be able switch to other file fast.  In Emacs, <code>C-x b &lt;enter&gt;</code>, in TextMate <code>Command-T &lt;enter&gt;</code>, in RubyMine <code>Command-e &lt;enter&gt;</code> do the job quite fanasticaly for me.  In fact, as a principle, I do not use editors where this isn&rsquo;t possible or isn&rsquo;t fast enough ( I am looking at you Eclipse and Netbeans ).  Most editors who do this well allow you to perform &ldquo;partial name search&rdquo; i.e. searching for bdct will return *broadcast* amongst others.  Folder scoping is also often allowed. i.e. searching for <code>a/v/a/bdht</code> can return <code>app/views/admin/_broadcast.html.erb</code>.</p></li>
+<li><p><strong>See or edit different parts of the same file or vertical &amp; horizontal split views.</strong>  When jumping between the files is not enough, you need to be able to look at the files at the same time, or look at different parts of the same file.  E.g. while editing markdown, you&rsquo;ll want live preview on right.  Or while writing a public API for your class, you&rsquo;ll want to look at the private methods etc.  In another case, you&rsquo;ll want to open up a REPL on the side while you edit code and preiodically send code to the REPL for evaluation.  Use cases are plenty and hence this is a part of this list.</p></li>
+<li><p><strong>Dumb autocomplete.</strong>  Your editor and you should know how to quickly complete words in the same file, words typed before, keywords in the current language (programming or not).  <code>C-\</code> in Emacs, <code>Alt-/</code> in IntelliJ or <code>Escape</code> in TextMate are good examples of this.  Fancy, code aware completions are heavily IDE dependent and very hard to get right.  But dumb completions can be fast and very handy.</p></li>
+<li><p><strong>Run a test or open a shell.</strong>  I love my <code>Ctrl+Shift+R</code> in RubyMine where it runs the test I am curretly editing or the test file I am currently editing, depending on where my caret is.  Same goes for <code>Command+Shift+R</code> in TextMate. In Emacs <code>M-x shell</code> opens the terminal within Emacs and use it often, for running tasks, creating files, git commits, etc.</p></li>
+<li><p><strong>Comment and uncomment code.</strong>  I contemplated whether this should be a part of this list and decided to keep it.  When working on existing code, commenting and uncommenting can be extremely valuable.</p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Console your gems: Add REPL to them]]></title>
