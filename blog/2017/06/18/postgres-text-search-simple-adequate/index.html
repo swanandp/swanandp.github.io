@@ -1,24 +1,76 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Swanand Pagnis]]></title>
-  <link href="http://swanandp.github.io/atom.xml" rel="self"/>
-  <link href="http://swanandp.github.io/"/>
-  <updated>2017-06-19T13:42:55+05:30</updated>
-  <id>http://swanandp.github.io/</id>
-  <author>
-    <name><![CDATA[Swanand Pagnis]]></name>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script type="text/javascript" src="//use.typekit.net/dye4uvz.js"></script>
+    <script type="text/javascript">try { Typekit.load({ async: true }); } catch (e) { }</script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>
+        Postgres Text Search: Simple, Adequate | Swanand Pagnis
+    </title>
+
+    <meta name="author" content="Swanand Pagnis">
+
     
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Postgres Text Search: Simple, Adequate]]></title>
-    <link href="http://swanandp.github.io/blog/2017/06/18/postgres-text-search-simple-adequate/"/>
-    <updated>2017-06-18T00:00:00+05:30</updated>
-    <id>http://swanandp.github.io/blog/2017/06/18/postgres-text-search-simple-adequate</id>
-    <content type="html"><![CDATA[<p>Searching for text within your data is a frequently requested feature, and often leads to excellent UX.  Gmail&rsquo;s web interface is entirely built on top of search. No wonder databases have supported basic text search operators like ~, LIKE, ILIKE etc for a long time.  But they often fall short or give inaccurate results, as we try to evolve the feature.  Say, searching in multiple languages, or searching for different variants of the same word: consider realistically, realistic, and realist, or <a href="https://www.google.co.in/#q=ruby+-jewel">searching one word, but not the other</a>.</p>
+    <meta name="description" content="Searching for text within your data is a frequently requested feature, and often leads to excellent UX. Gmail&rsquo;s web interface is entirely &hellip;">
+
+    
+        <meta name="keywords" content="">
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link href="/atom.xml" rel="alternate" title="Swanand Pagnis" type="application/atom+xml">
+    <link rel="canonical" href="">
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    
+</head>
+
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Swanand Pagnis</a></h1>
+<h4>Essays, Blogs, Rants and Experiences</h4>
+<nav id="main-nav"><ul>
+	<li><a href="/">Blog</a></li>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archive</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul>
+	<li><a href="/">Blog</a></li>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archive</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:swanandp.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+
+
+</header>
+
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Postgres Text Search: Simple, Adequate</h2>
+	<div class="entry-content"><p>Searching for text within your data is a frequently requested feature, and often leads to excellent UX.  Gmail&rsquo;s web interface is entirely built on top of search. No wonder databases have supported basic text search operators like ~, LIKE, ILIKE etc for a long time.  But they often fall short or give inaccurate results, as we try to evolve the feature.  Say, searching in multiple languages, or searching for different variants of the same word: consider realistically, realistic, and realist, or <a href="https://www.google.co.in/#q=ruby+-jewel">searching one word, but not the other</a>.</p>
 
 <p>This is where full-text search comes in.  <!-- more --> Postgres ships with excellent full-text search capabilities which allow us to implement text search in our application without incurring additional dependencies and operational overhead.  More over, having a built-in search allows us to compose search with other existing queries and procedures.  When I say the excellent capabilities, I mean fully-featured.  And when I say fully-featured, I mean that it supports stemming, search relevance, search highlights, fuzzy matching, and multiple languages.</p>
 
@@ -467,170 +519,104 @@
 
 
 
-]]></content>
-  </entry>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
   
-  <entry>
-    <title type="html"><![CDATA[10 actions you must internalize in your Editor]]></title>
-    <link href="http://swanandp.github.io/blog/2014/05/06/10-actions-you-must-internalize/"/>
-    <updated>2014-05-06T10:45:07+05:30</updated>
-    <id>http://swanandp.github.io/blog/2014/05/06/10-actions-you-must-internalize</id>
-    <content type="html"><![CDATA[<p>We love our Emacs vs Vim vs &lt;others&gt; debates.  In one argument Emacs rocks, in another Vim wins the day and in some other, TextMate takes the cake.  However, more than we love our editors, we love being productive; after all that is all what this is about.  By now, we know that the joy of writing code is well augmented by a good editor. It acts like a great force multiplier.  We go to great lengths to curate the editor &amp; its configuration to what suits us.</p>
-
-<p>What happens when you want to use a different editor? <!-- more --> Or the same editor with different dotfiles?  They say that opening an editor and finding someone else&rsquo;s dotfiles is like going to bed and finding someone else&rsquo;s partner there.  From the outset, looks like an extremely awkward and uncomfortable experience. But, great if you were looking to switch.  So how do you learn an editor in order to be effective enough; enough being the keyword here?  The short answer to this is &ldquo;do the grunt work and put in the time&rdquo;.  However, I think all is not lost and learning a few actions as the first thing can save you a lot of time.  I often keep a cheat sheet ready with these actions in order to build the required muscle memory.</p>
-
-<p>Now, this list is of course not complete.  A lot of things could be added to it or removed from it.  However, this is my recipe for quickly learning an editor.  And I would love to hear yours.  One thing to keep in mind is that this is not an exhaustive list of features that our editors must have.  No.  This is a list that we as programmers can use to quickly pass the learning curve of an editor.</p>
-
-<p>I say <em>10</em>, but, it could well be <em>16</em>.  The point is having a minimum viable list.</p>
-
-<ol>
-<li><strong>Navigation within the file, moving around.</strong>  This is the most fundamental and the very first thing you&rsquo;ll probably do.  If in Emacs you can&rsquo;t C-n C-p C-f or C-b your way around, you&rsquo;ll feel exasperated soon.  So first thing to learn would be move the caret forward and backward.  There are different flavours to moving around:
-
-<ol>
-<li>One character at a time</li>
-<li>One word at a time</li>
-<li>One line at a time</li>
-<li>One paragraph at a time etc.</li>
-</ol>
-</li>
-<li><p><strong>Select, cut, copy and paste.</strong>  This comes naturally from Point 1.  Once you are able to move around, you would want to move text around.  Selecting text is also extremely important.  You don&rsquo;t have to use your mouse to actually select.  Selection is actually demarcation, and it works a scope.  Select a bunch of text and then perform an action only on that text.  I&rsquo;ll elaborate on this further down the list. <small> &lt;rant&gt; This ability is overrated and often superseded by others actions in the list. &lt;/rant&gt; </small></p></li>
-<li><p><strong>Duplicate, delete, move and displace lines and blocks.</strong>  When working with code, we often work with whole lines, rather than words or characters. Which is why this ability comes extremely handy.  It is best used while refactoring code or formatting code.  I cannot stress how important this is.  Duplicating lines and them moving them around is indispensable.  Once you&rsquo;ve learned to use this well, I&rsquo;ll bet you would be uncomfortable without it.</p></li>
-<li><p><strong>Search and replace strings and regular expressions; scoped or not.</strong>  Search and replace, combined with text selection that acts as scope is an integral part of refactoring code.  When I think of S&amp;R, I think of renaming variables, functions, classes.  I think of upgrading from <code>:key =&gt; value</code> to <code>key: value</code>.  I think of upgrading from Bootstrap 2 to Bootstrap 3, where <code>span12</code> becomes <code>col-md-12</code>.  You get the point.  As a side note, if you are building an editor to learn something new, this can a fun feature to implement.  Go ahead and try if it suits you.</p></li>
-<li><p><strong>Quickly generate boilerplate code.</strong>  Once you are past the steeper part of the learning curve of a language technology, boilerplate manifests as the killer of you productivity and brings death to it by boredom. Unless, you have tuned your editor to snuff it out quickly.  Type <code>def&lt;tab&gt;</code> and boom, you have a method definition placeholder. <code>cla&lt;tab&gt;</code> and you have class declaration, <code>for&lt;tab&gt;</code> you have your block ready. etc. etc.  More than the terse languages like Ruby, Python, this will be more handy in verbose languages like Java, Objective C.</p></li>
-<li><p><strong>Quickly jump to recently used files. Jump to any file within the project in few keystrokes.</strong>  <code>Command+T</code> in TextMate <code>Control-P</code> in Vim etc.  When working on a project, the impact this feature can have is tremendous.  One of the best use cases is jumping to last file.  I often find that I typically work with 2 files at a time ( Model and the Controller or The presenter and the view, the header and the implementation, Model and its Tests etc. ).  So I need to be able switch to other file fast.  In Emacs, <code>C-x b &lt;enter&gt;</code>, in TextMate <code>Command-T &lt;enter&gt;</code>, in RubyMine <code>Command-e &lt;enter&gt;</code> do the job quite fantastically for me.  In fact, as a principle, I do not use editors where this isn&rsquo;t possible or isn&rsquo;t fast enough ( I am looking at you Eclipse and Netbeans ).  Most editors who do this well allow you to perform &ldquo;partial name search&rdquo; i.e. searching for bdct will return *broadcast* amongst others.  Folder scoping is also often allowed. i.e. searching for <code>a/v/a/bdht</code> can return <code>app/views/admin/_broadcast.html.erb</code>.</p></li>
-<li><p><strong>See or edit different parts of the same file or vertical &amp; horizontal split views.</strong>  When jumping between the files is not enough, you need to be able to look at the files at the same time, or look at different parts of the same file.  E.g. while editing markdown, you&rsquo;ll want live preview on right.  Or while writing a public API for your class, you&rsquo;ll want to look at the private methods etc.  In another case, you&rsquo;ll want to open up a REPL on the side while you edit code and periodically send code to the REPL for evaluation.  Use cases are plenty and hence this is a part of this list.</p></li>
-<li><p><strong>Dumb autocomplete.</strong>  Your editor and you should know how to quickly complete words in the same file, words typed before, keywords in the current language (programming or not).  <code>C-\</code> in Emacs, <code>Alt-/</code> in IntelliJ or <code>Escape</code> in TextMate are good examples of this.  Fancy, code aware completions are heavily IDE dependent and very hard to get right.  But dumb completions can be fast and very handy.</p></li>
-<li><p><strong>Run a test or open a shell.</strong>  I love my <code>Ctrl+Shift+R</code> in RubyMine where it runs the test I am currently editing or the test file I am currently editing, depending on where my caret is.  Same goes for <code>Command+Shift+R</code> in TextMate. In Emacs <code>M-x shell</code> opens the terminal within Emacs and use it often, for running tasks, creating files, git commits, etc.</p></li>
-<li><p><strong>Comment and uncomment code.</strong>  I contemplated whether this should be a part of this list and decided to keep it.  When working on existing code, commenting and uncommenting can be extremely valuable.</p></li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Console your gems: Add REPL to them]]></title>
-    <link href="http://swanandp.github.io/blog/2014/04/28/console-repl-for-your-gems/"/>
-    <updated>2014-04-28T12:27:34+05:30</updated>
-    <id>http://swanandp.github.io/blog/2014/04/28/console-repl-for-your-gems</id>
-    <content type="html"><![CDATA[<p>When you are working on a Ruby gem or a Ruby library ( why you would have a Ruby library that isn&rsquo;t a gem is beyond me ), it is <s>always</s> often desirable to have a Pry session loaded with the gem your working on.  In fact, I&rsquo;ll go out on a limb and say that REPL driven development is a a must-do when writing libraries.  REPLs are like ice added to your beer when it isn&rsquo;t cold anymore, except this ice is made from the same beer.</p>
-
-<!-- more -->
 
 
-<p>A lot of gems ship with this functionality, but if not, it is extremely easy to add one.  To avoid polluting every gem with our code, we can utilize the concept of Rake&rsquo;s global tasks.  Rake&rsquo;s default source for looking at tasks or <span title="Google it">rules</span> is the Rakefile and all files that are declared as source files in the Rakefile; typically <code>*.rake</code> files in your tasks folder, but this can vary depending on your project.  However, rake also looks at <code>~/.rake/*.rake</code> if we ask it to. So let&rsquo;s create a file called <code>~/.rake/console.rake</code> and add the following task to it:</p>
+<time datetime="2017-06-18T00:00:00+05:30" pubdate data-updated="true">Jun 18<span>th</span>, 2017</time></div>
+	
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">desc</span> <span class="s2">&quot;Open a pry (or irb) session preloaded with this gem&quot;</span>
-</span><span class='line'><span class="n">task</span> <span class="ss">:console</span> <span class="k">do</span>
-</span><span class='line'>  <span class="k">begin</span>
-</span><span class='line'>    <span class="nb">require</span> <span class="s1">&#39;pry&#39;</span>
-</span><span class='line'>    <span class="n">gem_name</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="no">Dir</span><span class="o">.</span><span class="n">pwd</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">sh</span> <span class="sx">%{pry -I lib -r </span><span class="si">#{</span><span class="n">gem_name</span><span class="si">}</span><span class="sx">.rb}</span>
-</span><span class='line'>  <span class="k">rescue</span> <span class="no">LoadError</span> <span class="o">=&gt;</span> <span class="n">_</span>
-</span><span class='line'>    <span class="n">sh</span> <span class="sx">%{irb -rubygems -I lib -r </span><span class="si">#{</span><span class="n">gem_name</span><span class="si">}</span><span class="sx">.rb}</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="tags">
+
+	<a class='category' href='/blog/categories/full-text-search/'>full-text-search</a>, <a class='category' href='/blog/categories/how-tos/'>how-tos</a>, <a class='category' href='/blog/categories/postgres/'>postgres</a>
+
+</div>
 
 
-<p>And run our shiny new rake task:</p>
+	
+		<span class="comments"><a href="/blog/2017/06/18/postgres-text-search-simple-adequate/#disqus_thread">Comments</a></span>
+	
+</div></article>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">➜</span>  <span class="n">awesome_sauce</span> <span class="ss">git</span><span class="p">:(</span><span class="n">master</span><span class="p">)</span> <span class="err">✗</span> <span class="n">rake</span> <span class="n">console</span>
-</span><span class='line'><span class="n">rake</span> <span class="n">aborted!</span>
-</span><span class='line'><span class="no">Don</span><span class="s1">&#39;t know how to build task &#39;</span><span class="n">console</span><span class="err">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="no">See</span> <span class="n">full</span> <span class="n">trace</span> <span class="n">by</span> <span class="n">running</span> <span class="n">task</span> <span class="n">with</span> <span class="o">--</span><span class="n">trace</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Bummer! Let&rsquo;s double check:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">➜</span>  <span class="n">awesome_sauce</span> <span class="ss">git</span><span class="p">:(</span><span class="n">master</span><span class="p">)</span> <span class="err">✗</span> <span class="n">rake</span> <span class="o">-</span><span class="n">T</span> <span class="n">console</span>
-</span></code></pre></td></tr></table></div></figure>
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+<!---	<a class="addthis_counter addthis_pill_style"></a> --->
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
 
 
-<p>Nothing! What gives?  Not a cause of worry, because this is the expected behaviour, and we have a failing test. Rake takes global pollution quite seriously, and <em>does not</em> load the global tasks unless asked to.  So let&rsquo;s ask rake to do so, by adding a <code>-g</code> flag.  Because, you know, g for global:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">➜</span>  <span class="n">awesome_sauce</span> <span class="ss">git</span><span class="p">:(</span><span class="n">master</span><span class="p">)</span> <span class="err">✗</span> <span class="n">rake</span> <span class="o">-</span><span class="n">gT</span> <span class="n">console</span>
-</span><span class='line'><span class="n">rake</span> <span class="n">console</span>  <span class="c1"># Open a pry (or irb) session preloaded with this gem</span>
-</span></code></pre></td></tr></table></div></figure>
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2017
 
+    Swanand Pagnis
 
-<p>And subsequently</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">➜</span>  <span class="n">awesome_sauce</span> <span class="ss">git</span><span class="p">:(</span><span class="n">master</span><span class="p">)</span> <span class="err">✗</span> <span class="n">rake</span> <span class="o">-</span><span class="n">g</span> <span class="n">console</span>
-</span><span class='line'><span class="n">pry</span> <span class="o">-</span><span class="n">I</span> <span class="n">lib</span> <span class="o">-</span><span class="n">r</span> <span class="n">awesome_sauce</span><span class="o">.</span><span class="n">rb</span>
-</span><span class='line'><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mi">0</span> <span class="o">&gt;</span>
-</span><span class='line'><span class="c1"># Just to be sure</span>
-</span><span class='line'><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mi">0</span> <span class="o">&gt;</span> <span class="o">^</span><span class="n">D</span>
-</span><span class='line'><span class="err">➜</span>  <span class="n">awesome_sauce</span> <span class="ss">git</span><span class="p">:(</span><span class="n">master</span><span class="p">)</span> <span class="err">✗</span> <span class="n">cd</span> <span class="o">.</span><span class="n">.</span><span class="o">/</span><span class="n">secret_sauce</span>
-</span><span class='line'><span class="err">➜</span>  <span class="n">secret_sauce</span> <span class="ss">git</span><span class="p">:(</span><span class="n">hush</span><span class="o">-</span><span class="n">hush</span><span class="p">)</span> <span class="err">✗</span> <span class="n">rake</span> <span class="o">-</span><span class="n">g</span> <span class="n">console</span>
-</span><span class='line'><span class="n">rbx</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span> <span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mi">0</span> <span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
+<br>
+Powered by Octopress.
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
 
 
-<p>With this, I bow out and promise to come back with more palatable content later.</p>
+<script type="text/javascript">
+      var disqus_shortname = 'pagnis';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://swanandp.github.io/blog/2017/06/18/postgres-text-search-simple-adequate/';
+        var disqus_url = 'http://swanandp.github.io/blog/2017/06/18/postgres-text-search-simple-adequate/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
-<p><strong>Edit</strong>: As <a href="https://twitter.com/emilsoman">Emil</a> pointed out, <code>pry</code> uses the same trick in <code>pry --gem</code><a href="https://github.com/pry/pry/blob/01360a684443f9e516578566afe6f41d92f63419/lib/pry/cli.rb#L209"><sup>#</sup></a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[I am speaking at RubyConf India]]></title>
-    <link href="http://swanandp.github.io/blog/2014/02/09/i-am-speaking-at-rubyconf-india/"/>
-    <updated>2014-02-09T23:45:07+05:30</updated>
-    <id>http://swanandp.github.io/blog/2014/02/09/i-am-speaking-at-rubyconf-india</id>
-    <content type="html"><![CDATA[<p><a href="http://rubyconfindia.org/2014">India&rsquo;s premier Ruby conference</a> is happening at Goa this year, in the third week of March.  This year, my talk proposal got accepted and I am up on <a href="http://rubyconfindia2014.busyconf.com/schedule#activity_52cce8d8852da40010000095">day 1 at 2.30pm</a>.</p>
-
-<!-- more -->
 
 
-<p>I&rsquo;ve been digging into real time web applications for the last few months and SSE (Server Sent Events) and WebRTC caught my attention.  <a href="http://pusher.com/">Pusher</a>, a fantastic service that allows you easily implement a pub/sub model in your application, uses SSE as a transport.  And <a href="http://www.webrtc.org/">WebRTC</a> is a recent addition to the fore. Well, not so recent, as Google open sourced it in 2011.  A standard API is currently being drafted by the W3C.</p>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-46877851-1']);
+		_gaq.push(['_trackPageview']);
 
-<p>These technologies allow two-way communication between server and client and you no longer have to depend on polling to update the clients.  There are arguments that this breaks the hypermedia agreement, and is harder to scale than traditional stateless Request/Response style of serving web resources.  I haven&rsquo;t yet formed an opinion on this, because I am clearly blinded by the awesomeness and ease of using these technologies.</p>
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
 
-<p>In my talk I aim to introduce the concepts to the audience and then follow it up with code examples and best practises.  As most of the audience would be interested hear about Rails integration, I will cover all examples in the Rails context.  If you are going to be there, do read the Wikipedia page of the involved concepts and then come to the talk, I am certain you will gain a lot more this way.</p>
 
-<p>Oh and I forgot to mention, RubyConfIndia offers this awesome badge:</p>
 
-<p><a href="http://rubyconfindia.org/"><img src="https://raw.githubusercontent.com/rubyconfindia/rci2014/master/images/badges/180/speaker.png"></a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hello, world!]]></title>
-    <link href="http://swanandp.github.io/blog/2014/01/08/hello/"/>
-    <updated>2014-01-08T14:49:26+05:30</updated>
-    <id>http://swanandp.github.io/blog/2014/01/08/hello</id>
-    <content type="html"><![CDATA[<p>Wikipedia tells us:</p>
-
-<blockquote><p>A &ldquo;Hello World&rdquo; program has become the traditional first program that many people learn. In general, it is simple enough so that people who have no experience with computer programming can easily understand it, especially with the guidance of a teacher or a written guide. Using this simple program as a basis, computer science principles or elements of a specific programming language can be explained to novice programmers. Experienced programmers learning new languages can also gain a lot of information about a given language&rsquo;s syntax and structure from a hello world program.</p></blockquote>
-]]></content>
-  </entry>
-  
-</feed>
+</body>
+</html>

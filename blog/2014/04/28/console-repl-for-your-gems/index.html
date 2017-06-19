@@ -2,26 +2,37 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<script data-cfasync="false" type="text/javascript" src="//use.typekit.net/axj3cfp.js"></script>
-	<script data-cfasync="false" type="text/javascript">try{Typekit.load();}catch(e){}</script>
-	<meta charset="utf-8">
-	<title>Console your gems: Add REPL to them  | Swanand Pagnis</title>
+    <script type="text/javascript" src="//use.typekit.net/dye4uvz.js"></script>
+    <script type="text/javascript">try { Typekit.load({ async: true }); } catch (e) { }</script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>
+        Console your gems: Add REPL to them | Swanand Pagnis
+    </title>
 
-<meta name="author" content="Swanand Pagnis"> 
+    <meta name="author" content="Swanand Pagnis">
 
-<meta name="description" content="When you are working on a Ruby gem or a Ruby library ( why you would have a Ruby library that isn&rsquo;t a gem is beyond me ), it is always often &hellip;"> <meta name="keywords" content="">
+    
 
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="When you are working on a Ruby gem or a Ruby library ( why you would have a Ruby library that isn&rsquo;t a gem is beyond me ), it is always often &hellip;">
 
-	<link href="/atom.xml" rel="alternate" title="Swanand Pagnis" type="application/atom+xml">
-	<link rel="canonical" href="">
-  <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
-  <link href="//favicon.ico" rel="icon" type="image/x-icon">
-	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	
+    
+        <meta name="keywords" content="">
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link href="/atom.xml" rel="alternate" title="Swanand Pagnis" type="application/atom+xml">
+    <link rel="canonical" href="">
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    
 </head>
+
 
 
 <body>
@@ -60,6 +71,9 @@
 	<div id="content" class="inner"><article class="post">
 	<h2 class="title">Console Your Gems: Add REPL to Them</h2>
 	<div class="entry-content"><p>When you are working on a Ruby gem or a Ruby library ( why you would have a Ruby library that isn&rsquo;t a gem is beyond me ), it is <s>always</s> often desirable to have a Pry session loaded with the gem your working on.  In fact, I&rsquo;ll go out on a limb and say that REPL driven development is a a must-do when writing libraries.  REPLs are like ice added to your beer when it isn&rsquo;t cold anymore, except this ice is made from the same beer.</p>
+
+<!-- more -->
+
 
 <p>A lot of gems ship with this functionality, but if not, it is extremely easy to add one.  To avoid polluting every gem with our code, we can utilize the concept of Rake&rsquo;s global tasks.  Rake&rsquo;s default source for looking at tasks or <span title="Google it">rules</span> is the Rakefile and all files that are declared as source files in the Rakefile; typically <code>*.rake</code> files in your tasks folder, but this can vary depending on your project.  However, rake also looks at <code>~/.rake/*.rake</code> if we ask it to. So let&rsquo;s create a file called <code>~/.rake/console.rake</code> and add the following task to it:</p>
 
@@ -140,7 +154,7 @@
 
 <p>With this, I bow out and promise to come back with more palatable content later.</p>
 
-<p><strong>Edit</strong>: As <a href="https://twitter.com/emilsoman">Emil</a> pointed out, <code>pry</code> uses the same trick in <code>pry --gem</code><a href="https://github.com/pry/pry/blob/master/lib/pry/cli.rb#L181"><sup>#</sup></a>.</p>
+<p><strong>Edit</strong>: As <a href="https://twitter.com/emilsoman">Emil</a> pointed out, <code>pry</code> uses the same trick in <code>pry --gem</code><a href="https://github.com/pry/pry/blob/01360a684443f9e516578566afe6f41d92f63419/lib/pry/cli.rb#L209"><sup>#</sup></a>.</p>
 </div>
 
 
@@ -162,7 +176,7 @@
 
 <div class="tags">
 
-	<a class='category' href='/blog/categories/rake/'>rake</a>, <a class='category' href='/blog/categories/repl/'>repl</a>
+	<a class='category' href='/blog/categories/how-tos/'>how-tos</a>, <a class='category' href='/blog/categories/rake/'>rake</a>, <a class='category' href='/blog/categories/repl/'>repl</a>
 
 </div>
 
@@ -192,7 +206,7 @@
 </div>
 </section>
 </div>
-	<footer id="footer" class="inner">Copyright &copy; 2014
+	<footer id="footer" class="inner">Copyright &copy; 2017
 
     Swanand Pagnis
 

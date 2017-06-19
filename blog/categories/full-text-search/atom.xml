@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: full-text-search | Swanand Pagnis]]></title>
+  <link href="http://swanandp.github.io/blog/categories/full-text-search/atom.xml" rel="self"/>
+  <link href="http://swanandp.github.io/"/>
+  <updated>2017-06-19T13:42:55+05:30</updated>
+  <id>http://swanandp.github.io/</id>
+  <author>
+    <name><![CDATA[Swanand Pagnis]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Postgres Text Search: Simple, Adequate]]></title>
+    <link href="http://swanandp.github.io/blog/2017/06/18/postgres-text-search-simple-adequate/"/>
+    <updated>2017-06-18T00:00:00+05:30</updated>
+    <id>http://swanandp.github.io/blog/2017/06/18/postgres-text-search-simple-adequate</id>
+    <content type="html"><![CDATA[<p>Searching for text within your data is a frequently requested feature, and often leads to excellent UX.  Gmail&rsquo;s web interface is entirely built on top of search. No wonder databases have supported basic text search operators like ~, LIKE, ILIKE etc for a long time.  But they often fall short or give inaccurate results, as we try to evolve the feature.  Say, searching in multiple languages, or searching for different variants of the same word: consider realistically, realistic, and realist, or <a href="https://www.google.co.in/#q=ruby+-jewel">searching one word, but not the other</a>.</p>
+
+<p>This is where full-text search comes in.  <!-- more --> Postgres ships with excellent full-text search capabilities which allow us to implement text search in our application without incurring additional dependencies and operational overhead.  More over, having a built-in search allows us to compose search with other existing queries and procedures.  When I say the excellent capabilities, I mean fully-featured.  And when I say fully-featured, I mean that it supports stemming, search relevance, search highlights, fuzzy matching, and multiple languages.</p>
+
+<p>In this post, we&rsquo;ll look at basic text search.  In particular, we&rsquo;ll look at the fundamental components of a text search, and how to use them.</p>
+
+<p><strong>Document</strong></p>
+
+<p>This is the source data within which we intend to search. Typically spread across multiple columns. Now, I know any search worth its salt must be able to search across multiple rows in multiple tables, but we&rsquo;ll come to that bit a little later in the post.  Postgres offers a function <code>to_tsvector</code> to obtain a search document from text.  It accepts text as an argument, and returns tsvector of the text.</p>
+
+<p>```sql</p>
+
+<pre><code>-- Example 1a: tsvector
+=# SELECT
+   to_tsvector('With great power, comes great responsibility!')
+   AS document;
+
+                document
+--------------------------------------------
+ 'come':4 'great':2,5 'power':3 'respons':6
+(1 row)
+
+-- Example 1b: have strings, will concat
+=# SELECT
+   to_tsvector('With great power' || ' ' || 'comes great responsibility!')
+   AS document;
+
+                  document
+--------------------------------------------
+ 'come':4 'great':2,5 'power':3 'respons':6
+(1 row)
+
+-- Example 1c: have tsvectors, will concat
+=# SELECT
+   to_tsvector('With great power')
+   || to_tsvector('comes great responsibility!')
+   AS document;
+
+                  document
+--------------------------------------------
+ 'come':4 'great':2,5 'power':3 'respons':6
+(1 row)
+</code></pre>
+
+<p>```</p>
+
+<p>A few things are noticeable:</p>
+
+<ol>
+<li>Punctuation is gone, so is &lsquo;with&rsquo;.  All commonly occurring words that don&rsquo;t have search relevance, such as &lsquo;with&rsquo;, are removed from the documents.  These differ from language to language, and are called &ldquo;stop words&rdquo;.</li>
+<li>Words are reduced to a base form. These are called as &ldquo;<a href="https://www.postgresql.org/docs/current/static/textsearch-intro.html">lexemes</a>&rdquo;; they are nothing but normalised forms of words, a term taken from <a href="https://en.wikipedia.org/wiki/Lexeme">linguistics</a>.</li>
+<li>The lexemes are sorted alphabetically, There are numbers associated with the lexemes.</li>
+<li>The tsvectors can be concatenated, <em>or</em> can operate on concatenated strings</li>
+</ol>
+
+
+<p>If you want to dig deeper into how the search actually works, these are some of the things you can read about.  For now, we&rsquo;ll focus on just one thing from this:  the to_tsvector accepted our text input, and returned a searchable value.</p>
+
+<p>As a side note, I really like this examples driven approach to learning.  Code and examples make for easier understanding of the subject, and give the reader a starting point to dig deeper.  In that spirit, this blog post is a repl-driven-blog-post.</p>
+
+<p><strong>Query</strong></p>
+
+<p>The term we wish to search for.  Typically a word or a phrase , but can be any text. Even a full document if you will. For obtaining a query object from the given search string, Postgres has two functions: <code>to_tsquery</code> and <code>plainto_tsquery</code>. <code>to_tsquery</code> allows us to use control characters like wildcards, but is a lot stricter with the input. <code>plainto_tsquery</code> on the other hand doesn&rsquo;t use control characters, but escapes all the input, and is safe from SQL injection.  In this post we&rsquo;ll only look at to_tsquery since it falls in line with our &ldquo;fully featured&rdquo; requirement.</p>
+
+<p>```sql</p>
+
+<pre><code>-- Example 2: tsquery
+=# SELECT to_tsquery('responsibility');
+ to_tsquery
+------------
+ 'respons'
+(1 row)
+
+-- Example 3: tsquery multiple words, with escaping
+=# SELECT to_tsquery('great\ responsibility');
+     to_tsquery
+---------------------
+ 'great' &amp; 'respons'
+(1 row)
+
+-- Example 4: Wildcard search
+=# SELECT to_tsquery('Eliz:*');
+ to_tsquery
+------------
+ 'eliz':*
+(1 row)
+
+-- Example 5: Intersection (AND-ing)
+=# SELECT to_tsquery('Barry') &amp;&amp; to_tsquery('Allen');
+     ?column?
+-------------------
+ 'barri' &amp; 'allen'
+(1 row)
+
+-- Example 5: Union (OR-ing)
+=# SELECT to_tsquery('Barry') || to_tsquery('Wally');
+     ?column?
+-------------------
+ 'barri' | 'walli'
+(1 row)
+</code></pre>
+
+<p>```</p>
+
+<p>Examples demonstrate the various usages of to_tsquery.  Wildcards, AND and OR do exactly what you&rsquo;d expect them to do.  The key takeaway is that, these are just regular functions, like <code>LOWER</code>, <code>LENGTH</code> and so we can just use them in <em>any</em> query.</p>
+
+<p>```sql</p>
+
+<p>&mdash; Example 6
+=# SELECT
+   name,
+   to_tsvector(name) AS document
+   FROM states
+   ORDER BY name ASC
+   LIMIT 10;</p>
+
+<pre><code>     name         |         document
+</code></pre>
+
+<p>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;
+ Alabama              | &lsquo;alabama&rsquo;:1
+ Alaska               | &lsquo;alaska&rsquo;:1
+ Arizona              | &lsquo;arizona&rsquo;:1
+ Arkansas             | &lsquo;arkansa&rsquo;:1
+ California           | &lsquo;california&rsquo;:1
+ Colorado             | &lsquo;colorado&rsquo;:1
+ Connecticut          | &lsquo;connecticut&rsquo;:1
+ Delaware             | &lsquo;delawar&rsquo;:1
+ District of Columbia | &lsquo;columbia&rsquo;:3 &lsquo;district&rsquo;:1
+ Florida              | &lsquo;florida&rsquo;:1
+(10 rows)</p>
+
+<p>```</p>
+
+<p><strong>Putting document and query together</strong></p>
+
+<p>Now the question arises: How to actually use tsvector and tsquery?  Enter the <code>@@</code> operator.  This is the operator that actually performs the search. Examples work the best, so let&rsquo;s search for a US State with the word &ldquo;North&rdquo; in it:</p>
+
+<p>```sql</p>
+
+<p>=# SELECT</p>
+
+<pre><code> name,
+ to_tsvector(name) AS document
+</code></pre>
+
+<p>   FROM states
+   WHERE to_tsvector(name) @@ to_tsquery(&lsquo;north&rsquo;)
+   ORDER BY name ASC;</p>
+
+<pre><code>  name      |        document
+</code></pre>
+
+<p>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
+ North Carolina | &lsquo;carolina&rsquo;:2 &lsquo;north&rsquo;:1
+ North Dakota   | &lsquo;dakota&rsquo;:2 &lsquo;north&rsquo;:1
+(2 rows)</p>
+
+<p>```</p>
+
+<br/>
+
+
+<p>Or, let&rsquo;s search for a state that has a word that starts with &ldquo;CA&rdquo;:</p>
+
+<p>```sql</p>
+
+<p>=# SELECT</p>
+
+<pre><code> name,
+ to_tsvector(name) AS document
+</code></pre>
+
+<p>   FROM states
+   WHERE to_tsvector(name) @@ to_tsquery(&lsquo;ca:*&rsquo;)
+   ORDER BY name ASC;</p>
+
+<pre><code>  name      |        document
+</code></pre>
+
+<p>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
+ California     | &lsquo;california&rsquo;:1
+ North Carolina | &lsquo;carolina&rsquo;:2 &lsquo;north&rsquo;:1
+ South Carolina | &lsquo;carolina&rsquo;:2 &lsquo;south&rsquo;:1
+(3 rows)</p>
+
+<p>```</p>
+
+<p>And that is your standard text search spanning multiple rows of a table.  A friendly, neighbourhood text-search is just a WHERE clause away! Another clear takeaway here is that any <code>@@</code> operation is no different from your average <code>=</code> operation.  Naturally, a multi-table search is just a join away. Multi-column searches are just a concatenation away.</p>
+
+<p>However, what I like about this idea is that I can now compose this search with my existing SQL queries.  Let&rsquo;s say I have a query for &ldquo;all contacts of a user that have a facebook profile&rdquo;, and now I can &ldquo;name search&rdquo; in just this subset.  To me, this is the best use-case of having the search built-in.  Composability is a very powerful design pattern.</p>
+
+<p>A note on <code>NULL</code>s:  As with everything in Postgres, text-search doesn&rsquo;t quite work well with NULLs.  If you have null columns, <a href="https://www.postgresql.org/docs/9.6/static/functions-conditional.html">COALESCE</a> is your friend, use it liberally!</p>
+
+<p><strong>Search relevance and rankings</strong></p>
+
+<p>Searches are often centered around finding &ldquo;all matching documents&rdquo;, rather than finding a specific document.  In its most basic form, search relevance boils down to two questions:</p>
+
+<ol>
+<li>How do I rank the results returned by the search?</li>
+<li>How do I control the ranking based on my context and requirements?</li>
+</ol>
+
+
+<p>Answer to the first question is the <code>ts_rank</code> function.  It accepts a tsvector and a tsquery as an argument, and returns the &ldquo;rank&rdquo;; which is a bit of a misnomer, because unlike a regular rank, where 1 is better than 2 is better than 3, this rank has the property &ldquo;higher the better&rdquo;.  It&rsquo;s best used in the ORDER clause.  Here&rsquo;s an example, searching all people whose name starts with &ldquo;Eliz&rdquo;. If that sounds odd, think autocomplete :</p>
+
+<p>```sql</p>
+
+<p>=# SELECT</p>
+
+<pre><code> first_name,
+ ts_rank(to_tsvector(first_name), to_tsquery('eliz:*')) as rank
+</code></pre>
+
+<p>   FROM person_names
+   WHERE to_tsvector(first_name) @@ to_tsquery(&lsquo;eliz:*&rsquo;)
+   ORDER BY rank DESC
+   LIMIT 10;</p>
+
+<p>   first_name    |   rank
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;
+ Elizabeth Eliza | 0.1215850
+ Elizabeth       | 0.0607927
+ Elizabeth       | 0.0607927
+ Elizabeth       | 0.0607927
+ Elizabeth       | 0.0607927
+ Elizabeth       | 0.0607927
+ Elizabeth       | 0.0607927
+ Elizabeth       | 0.0607927
+ ELIZABETH       | 0.0607927
+ Elizabeth       | 0.0607927</p>
+
+<p>```</p>
+
+<p>I think you will find that absolute rank isn&rsquo;t as useful as being able to order results by it.  That brings us to the next question, how can the ts_rank function be configured?  Say, you are searching blog posts, and want a match in title to carry more weight than a match in the body.  For this, Postgres offers &ldquo;weights&rdquo;.  The weights are called as A, B, C and D, in the order of precedence.  The default value for these weights are 1.0, 0.4, 0.2, 0.1.  Which means a match with A carries 10 times more weight than a match with D.</p>
+
+<p>Think of these weights as &ldquo;tags&rdquo;, i.e. you tag a tsvector as A or B or C or D, and specify which tags carry how much weight. With that, Postgres will yield appropriate rank.  The tags analogy will make more sense once we look at how tsquery uses these weights.  Here&rsquo;s a query to demonstrate using weights in tsvector:</p>
+
+<p>```sql</p>
+
+<p>=# SELECT ts_rank(</p>
+
+<pre><code>       setweight(to_tsvector('With great power'), 'A') ||
+       setweight(to_tsvector('comes great responsibility!'), 'D'),
+       to_tsquery('power'))
+</code></pre>
+
+<p>  AS rank;</p>
+
+<h2>   rank</h2>
+
+<p> 0.607927
+(1 row)</p>
+
+<p>=# SELECT ts_rank(</p>
+
+<pre><code>       setweight(to_tsvector('With great power'), 'A') ||
+       setweight(to_tsvector('comes great responsibility!'), 'D'),
+       to_tsquery('responsibility'))
+</code></pre>
+
+<p>   AS rank;</p>
+
+<h2>   rank</h2>
+
+<p> 0.0607927
+(1 row)</p>
+
+<p>```</p>
+
+<p>Our document here is made up of two parts, &ldquo;with great power&rdquo;, tagged A, and &ldquo;comes great responsibility&rdquo;, tagged D.</p>
+
+<p>The rank for &ldquo;power&rdquo; is 10 times higher than &ldquo;responsibility&rdquo; when searching this document, because &ldquo;power&rdquo; is in group A, while responsibility is in group D.  Without the weights, or with same weights to all components, they will have the same rank.</p>
+
+<p>The default assignment of weights A = 1, B = 0.4, C = 0.2 and D = 0.1 can be changed.  Refer to the documentation for variations of <code>ts_rank</code> that accept weights as an argument.  Playing around with the values in the psql console would give you an idea what works best for you.  I&rsquo;ve often found that the default values really do work the best.</p>
+
+<p>Coming back to the tags analogy, these same weights can also be assigned to a tsquery object, and the query would then match only amongst the given weight groups. Quite like a &ldquo;filter&rdquo;.  This allows for features like &ldquo;match this, but not that&rdquo;.  Have a look:</p>
+
+<p>```sql</p>
+
+<p>=# SELECT setweight(to_tsvector(&lsquo;With great power&rsquo;), &lsquo;A&rsquo;)</p>
+
+<pre><code> || setweight(to_tsvector('comes great responsibility!'), 'A')
+ @@
+ to_tsquery('resp:*B')
+</code></pre>
+
+<p>  AS is_match;</p>
+
+<h2> is_match</h2>
+
+<p> f
+(1 row)</p>
+
+<p>=# SELECT setweight(to_tsvector(&lsquo;With great power&rsquo;), &lsquo;A&rsquo;)</p>
+
+<pre><code> || setweight(to_tsvector('comes great responsibility!'), 'A')
+ @@
+ to_tsquery('resp:*A')
+</code></pre>
+
+<p>   AS is_match;</p>
+
+<h2> is_match</h2>
+
+<p> t
+(1 row)</p>
+
+<p>```</p>
+
+<p>The <a href="https://www.postgresql.org/docs/current/static/textsearch-controls.html">official documentation</a> about controlling text search is quite good, and detailed.  I highly recommend that you read at least this section of the documentation, if not all of it.</p>
+
+<p>This concludes the post about basic full-text search in Postgres. Have fun searching!  Do let me know what curious cases you tried out with tsquery and tsvectors.</p>
+
+<p>In a follow-up post, we&rsquo;ll look at improving search performance by indexing, fuzzy matching, text highlighting and supporting multiple languages.</p>
+
+<!-- Links -->
+
+
+
+]]></content>
+  </entry>
+  
+</feed>
