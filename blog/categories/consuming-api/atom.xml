@@ -4,7 +4,7 @@
   <title><![CDATA[Category: consuming-api | Swanand Pagnis]]></title>
   <link href="http://swanandp.github.io/blog/categories/consuming-api/atom.xml" rel="self"/>
   <link href="http://swanandp.github.io/"/>
-  <updated>2017-07-11T16:19:17+05:30</updated>
+  <updated>2017-07-11T18:09:23+05:30</updated>
   <id>http://swanandp.github.io/</id>
   <author>
     <name><![CDATA[Swanand Pagnis]]></name>
@@ -41,11 +41,11 @@
 </ul>
 
 
-<p>I am really fond of examples, so let&rsquo;s consider an example.  A RESTful service, where we interact with the &ldquo;Post&rdquo; resource.  We&rsquo;re able to list posts, get details about a post, create, update &amp; delete a post.  The service demands HTTP Basic auth, and JSON encoding.</p>
+<p>I am really fond of examples, so let&rsquo;s consider an example.  A RESTful service, where we interact with the &ldquo;Article&rdquo; resource.  We&rsquo;re able to list articles, get details about an article, create, update &amp; delete an article.  The service demands HTTP Basic auth, and JSON encoding.</p>
 
 <p>```ruby</p>
 
-<p>class PostsService
+<p>class ArticlesService
   include HTTParty</p>
 
 <p>  base_uri &ldquo;<a href="https://api.example.com">https://api.example.com</a>&rdquo;
@@ -70,14 +70,14 @@
 
 <p>  def index</p>
 
-<pre><code>get("posts")
+<pre><code>get("articles")
 </code></pre>
 
 <p>  end</p>
 
-<p>  def show(post_id)</p>
+<p>  def show(article_id)</p>
 
-<pre><code>get("posts/#{post_id}")
+<pre><code>get("articles/#{article_id}")
 </code></pre>
 
 <p>  end</p>
@@ -85,27 +85,27 @@
 <p>  def create(attributes)</p>
 
 <pre><code>self.class.post(
-  endpoint("posts"),
+  endpoint("articles"),
   default_options.merge(body: attributes.to_json)
 )
 </code></pre>
 
 <p>  end</p>
 
-<p>  def update(post_id, attributes)</p>
+<p>  def update(article_id, attributes)</p>
 
 <pre><code>self.class.patch(
-  endpoint("posts/#{post_id}"),
+  endpoint("articles/#{article_id}"),
   default_options.merge(body: attributes.to_json)
 )
 </code></pre>
 
 <p>  end</p>
 
-<p>  def destroy(post_id)</p>
+<p>  def destroy(article_id)</p>
 
 <pre><code>self.class.delete(
-  endpoint("posts/#{post_id}"),
+  endpoint("articles/#{article_id}"),
   default_options
 )
 </code></pre>
@@ -155,13 +155,13 @@ end</p>
 
 <p>```ruby</p>
 
-<p>service = PostsService.new</p>
+<p>service = ArticlesService.new</p>
 
 <p>pp service.index</p>
 
 <h1>[]</h1>
 
-<h1>Create a post</h1>
+<h1>Create an article</h1>
 
 <p>response = service.create(
   name: &ldquo;Star Trek: A new hope&rdquo;,
@@ -177,13 +177,13 @@ end</p>
 <h1>Made a mistake in the title, update it</h1>
 
 <p>service.update(
-  response[&lsquo;post&rsquo;][&lsquo;id&rsquo;],
+  response[&lsquo;article&rsquo;][&lsquo;id&rsquo;],
   name: &ldquo;Star Wars: Into the darkness&rdquo;
 )</p>
 
-<h1>Delete that abomination of a post</h1>
+<h1>Delete that abomination of an article</h1>
 
-<p>service.delete(response[&lsquo;post&rsquo;][&lsquo;id&rsquo;])</p>
+<p>service.delete(response[&lsquo;article&rsquo;][&lsquo;id&rsquo;])</p>
 
 <p>```</p>
 
@@ -230,7 +230,7 @@ password: ENV["API_PASSWORD"],
 end
 ```</p>
 
-<p>In addition to basic auth,  we should now send in an oauth style &ldquo;Bearer&rdquo; token:</p>
+<p>In addition to basic auth,  we can also send in an oauth style &ldquo;Bearer&rdquo; token:</p>
 
 <p><code>ruby
 @headers = {

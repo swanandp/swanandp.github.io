@@ -92,7 +92,7 @@ It makes it easy to &hellip;">
 </ul>
 
 
-<p>I am really fond of examples, so let&rsquo;s consider an example.  A RESTful service, where we interact with the &ldquo;Post&rdquo; resource.  We&rsquo;re able to list posts, get details about a post, create, update &amp; delete a post.  The service demands HTTP Basic auth, and JSON encoding.</p>
+<p>I am really fond of examples, so let&rsquo;s consider an example.  A RESTful service, where we interact with the &ldquo;Article&rdquo; resource.  We&rsquo;re able to list articles, get details about an article, create, update &amp; delete an article.  The service demands HTTP Basic auth, and JSON encoding.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -163,7 +163,7 @@ It makes it easy to &hellip;">
 <span class='line-number'>67</span>
 <span class='line-number'>68</span>
 <span class='line-number'>69</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">PostsService</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">ArticlesService</span>
 </span><span class='line'>  <span class="kp">include</span> <span class="no">HTTParty</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="n">base_uri</span> <span class="s2">&quot;https://api.example.com&quot;</span>
@@ -184,30 +184,30 @@ It makes it easy to &hellip;">
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">def</span> <span class="nf">index</span>
-</span><span class='line'>    <span class="n">get</span><span class="p">(</span><span class="s2">&quot;posts&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">get</span><span class="p">(</span><span class="s2">&quot;articles&quot;</span><span class="p">)</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">post_id</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">get</span><span class="p">(</span><span class="s2">&quot;posts/</span><span class="si">#{</span><span class="n">post_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">article_id</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">get</span><span class="p">(</span><span class="s2">&quot;articles/</span><span class="si">#{</span><span class="n">article_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
 </span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-</span><span class='line'>      <span class="n">endpoint</span><span class="p">(</span><span class="s2">&quot;posts&quot;</span><span class="p">),</span>
+</span><span class='line'>      <span class="n">endpoint</span><span class="p">(</span><span class="s2">&quot;articles&quot;</span><span class="p">),</span>
 </span><span class='line'>      <span class="n">default_options</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="ss">body</span><span class="p">:</span> <span class="n">attributes</span><span class="o">.</span><span class="n">to_json</span><span class="p">)</span>
 </span><span class='line'>    <span class="p">)</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">post_id</span><span class="p">,</span> <span class="n">attributes</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">article_id</span><span class="p">,</span> <span class="n">attributes</span><span class="p">)</span>
 </span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span>
-</span><span class='line'>      <span class="n">endpoint</span><span class="p">(</span><span class="s2">&quot;posts/</span><span class="si">#{</span><span class="n">post_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
+</span><span class='line'>      <span class="n">endpoint</span><span class="p">(</span><span class="s2">&quot;articles/</span><span class="si">#{</span><span class="n">article_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
 </span><span class='line'>      <span class="n">default_options</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="ss">body</span><span class="p">:</span> <span class="n">attributes</span><span class="o">.</span><span class="n">to_json</span><span class="p">)</span>
 </span><span class='line'>    <span class="p">)</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="n">post_id</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="n">article_id</span><span class="p">)</span>
 </span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span>
-</span><span class='line'>      <span class="n">endpoint</span><span class="p">(</span><span class="s2">&quot;posts/</span><span class="si">#{</span><span class="n">post_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
+</span><span class='line'>      <span class="n">endpoint</span><span class="p">(</span><span class="s2">&quot;articles/</span><span class="si">#{</span><span class="n">article_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
 </span><span class='line'>      <span class="n">default_options</span>
 </span><span class='line'>    <span class="p">)</span>
 </span><span class='line'>  <span class="k">end</span>
@@ -266,12 +266,12 @@ It makes it easy to &hellip;">
 <span class='line-number'>20</span>
 <span class='line-number'>21</span>
 <span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">service</span> <span class="o">=</span> <span class="no">PostsService</span><span class="o">.</span><span class="n">new</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">service</span> <span class="o">=</span> <span class="no">ArticlesService</span><span class="o">.</span><span class="n">new</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">pp</span> <span class="n">service</span><span class="o">.</span><span class="n">index</span>
 </span><span class='line'><span class="c1"># []</span>
 </span><span class='line'>
-</span><span class='line'><span class="c1"># Create a post</span>
+</span><span class='line'><span class="c1"># Create an article</span>
 </span><span class='line'><span class="n">response</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
 </span><span class='line'>  <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Star Trek: A new hope&quot;</span><span class="p">,</span>
 </span><span class='line'>  <span class="ss">body</span><span class="p">:</span> <span class="s2">&quot;A play about how Frodo is</span>
@@ -282,12 +282,12 @@ It makes it easy to &hellip;">
 </span><span class='line'>
 </span><span class='line'><span class="c1"># Made a mistake in the title, update it</span>
 </span><span class='line'><span class="n">service</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-</span><span class='line'>  <span class="n">response</span><span class="o">[</span><span class="s1">&#39;post&#39;</span><span class="o">][</span><span class="s1">&#39;id&#39;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">response</span><span class="o">[</span><span class="s1">&#39;article&#39;</span><span class="o">][</span><span class="s1">&#39;id&#39;</span><span class="o">]</span><span class="p">,</span>
 </span><span class='line'>  <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Star Wars: Into the darkness&quot;</span>
 </span><span class='line'><span class="p">)</span>
 </span><span class='line'>
-</span><span class='line'><span class="c1"># Delete that abomination of a post</span>
-</span><span class='line'><span class="n">service</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">response</span><span class="o">[</span><span class="s1">&#39;post&#39;</span><span class="o">][</span><span class="s1">&#39;id&#39;</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># Delete that abomination of an article</span>
+</span><span class='line'><span class="n">service</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">response</span><span class="o">[</span><span class="s1">&#39;article&#39;</span><span class="o">][</span><span class="s1">&#39;id&#39;</span><span class="o">]</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -347,7 +347,7 @@ It makes it easy to &hellip;">
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>In addition to basic auth,  we should now send in an oauth style &ldquo;Bearer&rdquo; token:</p>
+<p>In addition to basic auth,  we can also send in an oauth style &ldquo;Bearer&rdquo; token:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
