@@ -1,0 +1,488 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Actor|Nunito|PT+Mono" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>
+        Consuming HTTP APIs in Ruby | Swanand Pagnis
+    </title>
+
+    <meta name="author" content="Swanand Pagnis">
+
+    
+
+    <meta name="description" content="What is your favourite technique for consuming HTTP APIs in Ruby? I like using HTTParty! It offers a simple, intuitive API.
+It makes it easy to &hellip;">
+
+    
+        <meta name="keywords" content="">
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link href="/atom.xml" rel="alternate" title="Swanand Pagnis" type="application/atom+xml">
+    <link rel="canonical" href="">
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    
+</head>
+
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Swanand Pagnis</a></h1>
+<h4>Essays, Blogs, Rants and Experiences</h4>
+<nav id="main-nav"><ul>
+	<li><a href="/">Blog</a></li>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archive</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul>
+	<li><a href="/">Blog</a></li>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archive</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:swanandp.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+
+
+</header>
+
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Consuming HTTP APIs in Ruby</h2>
+	<div class="entry-content"><p>What is your favourite technique for consuming HTTP APIs in Ruby?  I like using <a href="https://github.com/jnunemaker/httparty">HTTParty</a>!</p>
+
+<ul>
+<li>It offers a simple, intuitive API.</li>
+<li>It makes it easy to support a whole bunch of standard API authentication mechanisms. <!-- more --></li>
+<li>It de-serialises responses based on content type headers.</li>
+<li>It allows us to write simple wrappers that are very close in form to the API we want to communicate with.</li>
+<li>It has a nice name!  And we know <a href="https://twitter.com/timbray/status/817025379109990402?cn=cmVwbHk%3D">how hard it is to name things</a>.</li>
+</ul>
+
+
+<p>I have come to employ a few patterns when working with HTTParty.  They are all centered around having a convenient internal API to work with, and the ease of testing.</p>
+
+<p>Most APIs I&rsquo;ve worked with have one of the following authentication mechanism:</p>
+
+<ul>
+<li>HTTP Basic Authentication</li>
+<li>HTTP Digest Authentication</li>
+<li>Auth token in header</li>
+<li>API key in query params / request body</li>
+</ul>
+
+
+<p>I am really fond of examples, so let&rsquo;s consider an example.  A RESTful service, where we interact with the &ldquo;Post&rdquo; resource.  We&rsquo;re able to list posts, get details about a post, create, update &amp; delete a post.  The service demands HTTP Basic auth, and JSON encoding.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">PostsService</span>
+</span><span class='line'>  <span class="kp">include</span> <span class="no">HTTParty</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">base_uri</span> <span class="s2">&quot;https://api.example.com&quot;</span>
+</span><span class='line'>  <span class="n">read_timeout</span> <span class="mi">5</span> <span class="c1"># always have timeouts!</span>
+</span><span class='line'>  <span class="c1"># debug_output $stdout # for quick access during debugging</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kp">attr_reader</span> <span class="ss">:auth</span><span class="p">,</span> <span class="ss">:headers</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span>
+</span><span class='line'>    <span class="vi">@auth</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="ss">username</span><span class="p">:</span> <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;API_USERNAME&quot;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">password</span><span class="p">:</span> <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;API_PASSWORD&quot;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="vi">@headers</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="s2">&quot;Content-Type&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">index</span>
+</span><span class='line'>    <span class="n">get</span><span class="p">(</span><span class="s2">&quot;posts&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">post_id</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">get</span><span class="p">(</span><span class="s2">&quot;posts/</span><span class="si">#{</span><span class="n">post_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+</span><span class='line'>      <span class="n">endpoint</span><span class="p">(</span><span class="s2">&quot;posts&quot;</span><span class="p">),</span>
+</span><span class='line'>      <span class="n">default_options</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="ss">body</span><span class="p">:</span> <span class="n">attributes</span><span class="o">.</span><span class="n">to_json</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">post_id</span><span class="p">,</span> <span class="n">attributes</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span>
+</span><span class='line'>      <span class="n">endpoint</span><span class="p">(</span><span class="s2">&quot;posts/</span><span class="si">#{</span><span class="n">post_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
+</span><span class='line'>      <span class="n">default_options</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="ss">body</span><span class="p">:</span> <span class="n">attributes</span><span class="o">.</span><span class="n">to_json</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="n">post_id</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span>
+</span><span class='line'>      <span class="n">endpoint</span><span class="p">(</span><span class="s2">&quot;posts/</span><span class="si">#{</span><span class="n">post_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
+</span><span class='line'>      <span class="n">default_options</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kp">protected</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">default_options</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="ss">headers</span><span class="p">:</span> <span class="n">headers</span><span class="p">,</span>
+</span><span class='line'>      <span class="n">basic_auth</span><span class="p">:</span> <span class="n">auth</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">endpoint</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+</span><span class='line'>    <span class="s2">&quot;/v1/</span><span class="si">#{</span><span class="n">uri</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+</span><span class='line'>      <span class="n">endpoint</span><span class="p">(</span><span class="n">uri</span><span class="p">),</span>
+</span><span class='line'>      <span class="n">default_options</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here&rsquo;s why I like this code:</p>
+
+<ol>
+<li>Simple, easy to read code that mimics the API quite nicely.</li>
+<li>Intuitive. Sending a POST request, is as simple as calling <code>post</code>.  No need to remember multiple things. Specifying headers, is literally passing an argument called <code>headers</code>.</li>
+<li>Interacting with the API is now simple:</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">service</span> <span class="o">=</span> <span class="no">PostsService</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">pp</span> <span class="n">service</span><span class="o">.</span><span class="n">index</span>
+</span><span class='line'><span class="c1"># []</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Create a post</span>
+</span><span class='line'><span class="n">response</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+</span><span class='line'>  <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Star Trek: A new hope&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">body</span><span class="p">:</span> <span class="s2">&quot;A play about how Frodo is</span>
+</span><span class='line'><span class="s2">         tricked into attending the</span>
+</span><span class='line'><span class="s2">         tri-wizard tournament by</span>
+</span><span class='line'><span class="s2">         evil shogun Gandalf&quot;</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Made a mistake in the title, update it</span>
+</span><span class='line'><span class="n">service</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+</span><span class='line'>  <span class="n">response</span><span class="o">[</span><span class="s1">&#39;post&#39;</span><span class="o">][</span><span class="s1">&#39;id&#39;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>  <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Star Wars: Into the darkness&quot;</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Delete that abomination of a post</span>
+</span><span class='line'><span class="n">service</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">response</span><span class="o">[</span><span class="s1">&#39;post&#39;</span><span class="o">][</span><span class="s1">&#39;id&#39;</span><span class="o">]</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Where&rsquo;s the fun without ever changing requirements?</p>
+
+<p>API, now V2, demands that we use digest auth, instead of basic auth.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">default_options</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="ss">headers</span><span class="p">:</span> <span class="n">headers</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">digest_auth</span><span class="p">:</span> <span class="n">auth</span><span class="p">,</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">endpoint</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+</span><span class='line'>  <span class="s2">&quot;/v2/</span><span class="si">#{</span><span class="n">uri</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That was a simple change. Let&rsquo;s try adding custom headers.  The API now supports logging, tracking and tagging requests. All done through headers. Since this is context specific, we&rsquo;ll pass in the context as an argument to the constructor:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</span><span class='line'>  <span class="vi">@auth</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="ss">username</span><span class="p">:</span> <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;API_USERNAME&quot;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>    <span class="ss">password</span><span class="p">:</span> <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;API_PASSWORD&quot;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="vi">@headers</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="s2">&quot;Content-Type&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;X-User-ID&quot;</span> <span class="o">=&gt;</span> <span class="n">user</span><span class="o">.</span><span class="n">tracking_id</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;X-Tags&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Name:</span><span class="si">#{</span><span class="n">user</span><span class="o">.</span><span class="n">full_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In addition to basic auth,  we should now send in an oauth style &ldquo;Bearer&rdquo; token:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@headers</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="s2">&quot;Content-Type&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;X-User-ID&quot;</span> <span class="o">=&gt;</span> <span class="n">user</span><span class="o">.</span><span class="n">tracking_id</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;X-Tags&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Name:</span><span class="si">#{</span><span class="n">user</span><span class="o">.</span><span class="n">full_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;Authorisation&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Bearer:</span><span class="si">#{</span><span class="n">user</span><span class="o">.</span><span class="n">oauth_token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Okay, this last example was lame.  But the point remains, HTTParty allows you to build your own service objects, and gets out of your way.  Exactly what a library should do.</p>
+
+<p>If you really take a close look at our examples, consuming an HTTP API is all about:</p>
+
+<ul>
+<li>Setting Headers</li>
+<li>Specifying Query parameters</li>
+<li>Request body encoding</li>
+<li>Parsing response based on content type</li>
+<li>Making the HTTP requests</li>
+</ul>
+
+
+<p>Not surprising, right?  HTTParty makes it simple, and intuitive to perform all these actions.  And hence it remains my favourite.</p>
+
+<p>P.S.  Here&rsquo;s the code used above, <a href="https://gist.github.com/swanandp/51d24ca474b10b10c68f2afeb30dc65e">in a Gist</a>.</p>
+
+<!-- Links -->
+
+
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2017-07-08T18:07:41+05:30" pubdate data-updated="true">Jul 8<span>th</span>, 2017</time></div>
+	
+
+<div class="tags">
+
+	<a class='category' href='/blog/categories/consuming-api/'>consuming-api</a>, <a class='category' href='/blog/categories/http-api/'>http-api</a>, <a class='category' href='/blog/categories/httparty/'>httparty</a>, <a class='category' href='/blog/categories/rest-api/'>rest-api</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
+
+</div>
+
+
+	
+		<span class="comments"><a href="/blog/2017/07/08/consuming-http-apis-in-ruby/#disqus_thread">Comments</a></span>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+<!---	<a class="addthis_counter addthis_pill_style"></a> --->
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2017
+
+    Swanand Pagnis
+
+<br>
+Powered by Octopress.
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'pagnis';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://swanandp.github.io/blog/2017/07/08/consuming-http-apis-in-ruby/';
+        var disqus_url = 'http://swanandp.github.io/blog/2017/07/08/consuming-http-apis-in-ruby/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-46877851-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

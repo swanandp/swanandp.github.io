@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: http-api | Swanand Pagnis]]></title>
+  <link href="http://swanandp.github.io/blog/categories/http-api/atom.xml" rel="self"/>
+  <link href="http://swanandp.github.io/"/>
+  <updated>2017-07-11T16:19:17+05:30</updated>
+  <id>http://swanandp.github.io/</id>
+  <author>
+    <name><![CDATA[Swanand Pagnis]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Consuming HTTP APIs in Ruby]]></title>
+    <link href="http://swanandp.github.io/blog/2017/07/08/consuming-http-apis-in-ruby/"/>
+    <updated>2017-07-08T18:07:41+05:30</updated>
+    <id>http://swanandp.github.io/blog/2017/07/08/consuming-http-apis-in-ruby</id>
+    <content type="html"><![CDATA[<p>What is your favourite technique for consuming HTTP APIs in Ruby?  I like using <a href="https://github.com/jnunemaker/httparty">HTTParty</a>!</p>
+
+<ul>
+<li>It offers a simple, intuitive API.</li>
+<li>It makes it easy to support a whole bunch of standard API authentication mechanisms. <!-- more --></li>
+<li>It de-serialises responses based on content type headers.</li>
+<li>It allows us to write simple wrappers that are very close in form to the API we want to communicate with.</li>
+<li>It has a nice name!  And we know <a href="https://twitter.com/timbray/status/817025379109990402?cn=cmVwbHk%3D">how hard it is to name things</a>.</li>
+</ul>
+
+
+<p>I have come to employ a few patterns when working with HTTParty.  They are all centered around having a convenient internal API to work with, and the ease of testing.</p>
+
+<p>Most APIs I&rsquo;ve worked with have one of the following authentication mechanism:</p>
+
+<ul>
+<li>HTTP Basic Authentication</li>
+<li>HTTP Digest Authentication</li>
+<li>Auth token in header</li>
+<li>API key in query params / request body</li>
+</ul>
+
+
+<p>I am really fond of examples, so let&rsquo;s consider an example.  A RESTful service, where we interact with the &ldquo;Post&rdquo; resource.  We&rsquo;re able to list posts, get details about a post, create, update &amp; delete a post.  The service demands HTTP Basic auth, and JSON encoding.</p>
+
+<p>```ruby</p>
+
+<p>class PostsService
+  include HTTParty</p>
+
+<p>  base_uri &ldquo;<a href="https://api.example.com">https://api.example.com</a>&rdquo;
+  read_timeout 5 # always have timeouts!
+  # debug_output $stdout # for quick access during debugging</p>
+
+<p>  attr_reader :auth, :headers</p>
+
+<p>  def initialize</p>
+
+<pre><code>@auth = {
+  username: ENV["API_USERNAME"],
+  password: ENV["API_PASSWORD"],
+}
+
+@headers = {
+  "Content-Type" =&gt; "application/json",
+}
+</code></pre>
+
+<p>  end</p>
+
+<p>  def index</p>
+
+<pre><code>get("posts")
+</code></pre>
+
+<p>  end</p>
+
+<p>  def show(post_id)</p>
+
+<pre><code>get("posts/#{post_id}")
+</code></pre>
+
+<p>  end</p>
+
+<p>  def create(attributes)</p>
+
+<pre><code>self.class.post(
+  endpoint("posts"),
+  default_options.merge(body: attributes.to_json)
+)
+</code></pre>
+
+<p>  end</p>
+
+<p>  def update(post_id, attributes)</p>
+
+<pre><code>self.class.patch(
+  endpoint("posts/#{post_id}"),
+  default_options.merge(body: attributes.to_json)
+)
+</code></pre>
+
+<p>  end</p>
+
+<p>  def destroy(post_id)</p>
+
+<pre><code>self.class.delete(
+  endpoint("posts/#{post_id}"),
+  default_options
+)
+</code></pre>
+
+<p>  end</p>
+
+<p>  protected</p>
+
+<p>  def default_options</p>
+
+<pre><code>{
+  headers: headers,
+  basic_auth: auth,
+}
+</code></pre>
+
+<p>  end</p>
+
+<p>  def endpoint(uri)</p>
+
+<pre><code>"/v1/#{uri}"
+</code></pre>
+
+<p>  end</p>
+
+<p>  def get(uri)</p>
+
+<pre><code>self.class.get(
+  endpoint(uri),
+  default_options
+)
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>```</p>
+
+<p>Here&rsquo;s why I like this code:</p>
+
+<ol>
+<li>Simple, easy to read code that mimics the API quite nicely.</li>
+<li>Intuitive. Sending a POST request, is as simple as calling <code>post</code>.  No need to remember multiple things. Specifying headers, is literally passing an argument called <code>headers</code>.</li>
+<li>Interacting with the API is now simple:</li>
+</ol>
+
+
+<p>```ruby</p>
+
+<p>service = PostsService.new</p>
+
+<p>pp service.index</p>
+
+<h1>[]</h1>
+
+<h1>Create a post</h1>
+
+<p>response = service.create(
+  name: &ldquo;Star Trek: A new hope&rdquo;,
+  body: &ldquo;A play about how Frodo is</p>
+
+<pre><code>     tricked into attending the
+     tri-wizard tournament by
+     evil shogun Gandalf"
+</code></pre>
+
+<p>)</p>
+
+<h1>Made a mistake in the title, update it</h1>
+
+<p>service.update(
+  response[&lsquo;post&rsquo;][&lsquo;id&rsquo;],
+  name: &ldquo;Star Wars: Into the darkness&rdquo;
+)</p>
+
+<h1>Delete that abomination of a post</h1>
+
+<p>service.delete(response[&lsquo;post&rsquo;][&lsquo;id&rsquo;])</p>
+
+<p>```</p>
+
+<p>Where&rsquo;s the fun without ever changing requirements?</p>
+
+<p>API, now V2, demands that we use digest auth, instead of basic auth.</p>
+
+<p>```ruby
+def default_options
+  {</p>
+
+<pre><code>headers: headers,
+digest_auth: auth,
+</code></pre>
+
+<p>  }
+end</p>
+
+<p>def endpoint(uri)
+  &ldquo;/v2/#{uri}&rdquo;
+end
+```</p>
+
+<p>That was a simple change. Let&rsquo;s try adding custom headers.  The API now supports logging, tracking and tagging requests. All done through headers. Since this is context specific, we&rsquo;ll pass in the context as an argument to the constructor:</p>
+
+<p>```ruby
+def initialize(user)
+  @auth = {</p>
+
+<pre><code>username: ENV["API_USERNAME"],
+password: ENV["API_PASSWORD"],
+</code></pre>
+
+<p>  }</p>
+
+<p>  @headers = {</p>
+
+<pre><code>"Content-Type" =&gt; "application/json",
+"X-User-ID" =&gt; user.tracking_id,
+"X-Tags" =&gt; "Name:#{user.full_name}",
+</code></pre>
+
+<p>  }
+end
+```</p>
+
+<p>In addition to basic auth,  we should now send in an oauth style &ldquo;Bearer&rdquo; token:</p>
+
+<p><code>ruby
+@headers = {
+  "Content-Type" =&gt; "application/json",
+  "X-User-ID" =&gt; user.tracking_id,
+  "X-Tags" =&gt; "Name:#{user.full_name}",
+  "Authorisation" =&gt; "Bearer:#{user.oauth_token}",
+}
+</code></p>
+
+<p>Okay, this last example was lame.  But the point remains, HTTParty allows you to build your own service objects, and gets out of your way.  Exactly what a library should do.</p>
+
+<p>If you really take a close look at our examples, consuming an HTTP API is all about:</p>
+
+<ul>
+<li>Setting Headers</li>
+<li>Specifying Query parameters</li>
+<li>Request body encoding</li>
+<li>Parsing response based on content type</li>
+<li>Making the HTTP requests</li>
+</ul>
+
+
+<p>Not surprising, right?  HTTParty makes it simple, and intuitive to perform all these actions.  And hence it remains my favourite.</p>
+
+<p>P.S.  Here&rsquo;s the code used above, <a href="https://gist.github.com/swanandp/51d24ca474b10b10c68f2afeb30dc65e">in a Gist</a>.</p>
+
+<!-- Links -->
+
+
+
+]]></content>
+  </entry>
+  
+</feed>
