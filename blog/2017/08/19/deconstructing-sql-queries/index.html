@@ -1,0 +1,567 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Actor|Nunito|PT+Mono" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>
+        Deconstructing SQL Queries | Swanand Pagnis
+    </title>
+
+    <meta name="author" content="Swanand Pagnis">
+
+    
+
+    <meta name="description" content="Let&rsquo;s look at an average, everyday SQL query: 1
+2
+3
+SELECT something
+FROM table
+WHERE conditions Not hard to draw parallels to other known &hellip;">
+
+    
+        <meta name="keywords" content="">
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link href="/atom.xml" rel="alternate" title="Swanand Pagnis" type="application/atom+xml">
+    <link rel="canonical" href="">
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    
+</head>
+
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Swanand Pagnis</a></h1>
+<h4>Essays, Blogs, Rants and Experiences</h4>
+<nav id="main-nav"><ul>
+	<li><a href="/">Blog</a></li>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archive</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul>
+	<li><a href="/">Blog</a></li>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archive</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:swanandp.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+
+
+</header>
+
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Deconstructing SQL Queries</h2>
+	<div class="entry-content"><p>Let&rsquo;s look at an average, everyday SQL query:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">something</span>
+</span><span class='line'><span class="k">FROM</span> <span class="k">table</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="n">conditions</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Not hard to draw parallels to other known concepts: <!-- more --></p>
+
+<ol>
+<li>FROM table: A set of elements</li>
+<li>WHERE conditions:  A filter operation on these elements</li>
+<li>SELECT something: A presenter of an individual element</li>
+</ol>
+
+
+<h2>Tables are sets</h2>
+
+<p>The bare minimum way of interacting with a set is to take a look at all or some of its elements. That is exactly what this query is doing. We&rsquo;re selecting a subset of a set elements based on a few conditions, and representing each element of this subset in some format.  Recall that a subset of a set is <em>also a set</em> in itself.  Which allows us to do something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">something</span>
+</span><span class='line'><span class="k">FROM</span> <span class="p">(</span>
+</span><span class='line'>  <span class="k">SELECT</span> <span class="n">something</span>
+</span><span class='line'>  <span class="k">FROM</span> <span class="k">table</span>
+</span><span class='line'>  <span class="k">WHERE</span> <span class="n">conditions</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="n">conditions</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We have a nested query, where instead of selecting from a table, we&rsquo;re selecting from the result of selecting from a table. <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>
+Sets can have labels or aliases, so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">a_name</span><span class="p">.</span><span class="n">something</span>
+</span><span class='line'><span class="k">FROM</span> <span class="p">(</span>
+</span><span class='line'>  <span class="k">SELECT</span> <span class="n">something</span>
+</span><span class='line'>  <span class="k">FROM</span> <span class="k">table</span>
+</span><span class='line'>  <span class="k">WHERE</span> <span class="n">conditions</span>
+</span><span class='line'><span class="p">)</span> <span class="k">as</span> <span class="n">a_name</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="n">conditions</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>An assertion is in order: <strong>a select query operates upon a set, and returns a set</strong>.  Naturally, a set can be a that of a single element as well.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="k">table</span> <span class="k">WHERE</span> <span class="n">conditions</span>
+</span><span class='line'><span class="c1">--- better yet:</span>
+</span><span class='line'><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">as</span> <span class="n">something</span> <span class="k">FROM</span> <span class="k">table</span> <span class="k">WHERE</span> <span class="n">conditions</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&rsquo;s substitute <em>this set</em> in our original query:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">the</span> <span class="n">same</span> <span class="n">something</span>
+</span><span class='line'><span class="k">FROM</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">as</span> <span class="n">something</span> <span class="k">FROM</span> <span class="k">table</span> <span class="k">WHERE</span> <span class="n">conditions</span><span class="p">)</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="n">conditions</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Sets can be unioned or intersected:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'>  <span class="k">SELECT</span> <span class="n">something</span>
+</span><span class='line'>  <span class="k">FROM</span> <span class="p">(</span><span class="n">a</span> <span class="k">set</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">WHERE</span> <span class="n">conditions</span>
+</span><span class='line'><span class="k">UNION</span> <span class="c1">-- or INTERSECTION</span>
+</span><span class='line'>  <span class="k">SELECT</span> <span class="n">the</span> <span class="n">same</span> <span class="n">something</span>
+</span><span class='line'>  <span class="k">FROM</span> <span class="p">(</span><span class="n">a</span> <span class="k">similar</span> <span class="k">set</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">WHERE</span> <span class="n">conditions</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notice that &ldquo;something&rdquo; and &ldquo;the same something&rdquo; are important.  We can only union or intersection similar sets.  Apples and oranges can&rsquo;t be unioned in the relational algebra land.</p>
+
+<h2>Joins are Sets</h2>
+
+<p>Let&rsquo;s talk about joins.  Chances are, at some point in life you&rsquo;ve written in INNER JOIN instead of an OUTER JOIN and got incorrect results.  Or something along those lines.  Joins can be very opaque, even to a regular practitioner.
+A few things are important when considering joins:
+1. A join is a product of 2 sets. Always. Multi-table joins are just &ldquo;first join these two&rdquo;, &ldquo;take the result&rdquo; and &ldquo;join the result with the next&rdquo;.
+2. Joins are always performed on sets.  So you can &ldquo;join&rdquo; any of the above mentioned sets, and you&rsquo;re still good. Do note that language semantics dictate that you use aliases to disambiguate.
+3. NULL is always a part of each set.  Implicitly so, for practicality.</p>
+
+<p>This is best explained through an example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">numbers</span> <span class="o">=</span> <span class="err">{</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="err">}</span>
+</span><span class='line'><span class="n">letters</span> <span class="o">=</span> <span class="err">{</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="k">c</span> <span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Joining <code>numbers</code> and <code>letters</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">numbers</span> <span class="o">|</span> <span class="n">letters</span>
+</span><span class='line'><span class="c1">--------|---------</span>
+</span><span class='line'><span class="k">NULL</span>    <span class="o">|</span> <span class="k">NULL</span>
+</span><span class='line'><span class="k">NULL</span>    <span class="o">|</span> <span class="n">a</span>
+</span><span class='line'><span class="k">NULL</span>    <span class="o">|</span> <span class="n">b</span>
+</span><span class='line'><span class="k">NULL</span>    <span class="o">|</span> <span class="k">c</span>
+</span><span class='line'><span class="mi">1</span>       <span class="o">|</span> <span class="k">NULL</span>
+</span><span class='line'><span class="mi">1</span>       <span class="o">|</span> <span class="n">a</span>
+</span><span class='line'><span class="mi">1</span>       <span class="o">|</span> <span class="n">b</span>
+</span><span class='line'><span class="mi">1</span>       <span class="o">|</span> <span class="k">c</span>
+</span><span class='line'><span class="mi">2</span>       <span class="o">|</span> <span class="k">NULL</span>
+</span><span class='line'><span class="mi">2</span>       <span class="o">|</span> <span class="n">a</span>
+</span><span class='line'><span class="mi">2</span>       <span class="o">|</span> <span class="n">b</span>
+</span><span class='line'><span class="mi">2</span>       <span class="o">|</span> <span class="k">c</span>
+</span><span class='line'><span class="mi">3</span>       <span class="o">|</span> <span class="k">NULL</span>
+</span><span class='line'><span class="mi">3</span>       <span class="o">|</span> <span class="n">a</span>
+</span><span class='line'><span class="mi">3</span>       <span class="o">|</span> <span class="n">b</span>
+</span><span class='line'><span class="mi">3</span>       <span class="o">|</span> <span class="k">c</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Do you get the feeling that you are getting more than what you bargained for?  Me too.  Depending on context, we&rsquo;ll want different subsets of this mega joined set.  That&rsquo;s exactly what different kinds of joins are for.  These joins will determine what working set we&rsquo;ll use.</p>
+
+<ol>
+<li>Inner join:  Do not consider the entries which have NULL on either side.</li>
+<li>Left outer join: Do not consider entries which have NULL on the LEFT side.</li>
+<li>Right outer join: Do not consider entries which have NULL of the RIGHT side.</li>
+<li>Full outer join: Consider all entries.</li>
+</ol>
+
+
+<p>For practical reasons, the entry where both sides are NULL is not considered.
+A slightly better example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">numbers</span> <span class="o">=</span> <span class="err">{</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="k">c</span><span class="p">]</span> <span class="err">}</span>
+</span><span class='line'><span class="n">letters</span> <span class="o">=</span> <span class="err">{</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">],</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span> <span class="p">[</span><span class="k">c</span><span class="p">,</span> <span class="n">z</span><span class="p">]</span> <span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">JOIN</span>
+</span><span class='line'>  <span class="n">numbers</span> <span class="k">AND</span> <span class="n">letters</span>
+</span><span class='line'><span class="k">ON</span> <span class="k">second</span> <span class="n">element</span> <span class="k">of</span> <span class="nb">number</span> <span class="o">=</span> <span class="k">first</span> <span class="n">element</span> <span class="k">of</span> <span class="n">letter</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Our working set:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">numbers</span> <span class="o">|</span> <span class="n">letters</span>
+</span><span class='line'><span class="c1">--------|---------</span>
+</span><span class='line'><span class="k">NULL</span>    <span class="o">|</span> <span class="k">NULL</span>
+</span><span class='line'><span class="k">NULL</span>    <span class="o">|</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+</span><span class='line'><span class="k">NULL</span>    <span class="o">|</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span>
+</span><span class='line'><span class="k">NULL</span>    <span class="o">|</span> <span class="p">[</span><span class="k">c</span><span class="p">,</span> <span class="n">z</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span>  <span class="o">|</span> <span class="k">NULL</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span>  <span class="o">|</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span>  <span class="o">|</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span>  <span class="o">|</span> <span class="p">[</span><span class="k">c</span><span class="p">,</span> <span class="n">z</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>  <span class="o">|</span> <span class="k">NULL</span>
+</span><span class='line'><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>  <span class="o">|</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>  <span class="o">|</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>  <span class="o">|</span> <span class="p">[</span><span class="k">c</span><span class="p">,</span> <span class="n">z</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="k">c</span><span class="p">]</span>  <span class="o">|</span> <span class="k">NULL</span>
+</span><span class='line'><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="k">c</span><span class="p">]</span>  <span class="o">|</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="k">c</span><span class="p">]</span>  <span class="o">|</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="k">c</span><span class="p">]</span>  <span class="o">|</span> <span class="p">[</span><span class="k">c</span><span class="p">,</span> <span class="n">z</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After applying conditions, and removing both sides NULL entry:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">numbers</span> <span class="o">|</span> <span class="n">letters</span>
+</span><span class='line'><span class="c1">--------|---------</span>
+</span><span class='line'><span class="k">NULL</span>    <span class="o">|</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+</span><span class='line'><span class="k">NULL</span>    <span class="o">|</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span>
+</span><span class='line'><span class="k">NULL</span>    <span class="o">|</span> <span class="p">[</span><span class="k">c</span><span class="p">,</span> <span class="n">z</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span>  <span class="o">|</span> <span class="k">NULL</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span>  <span class="o">|</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>  <span class="o">|</span> <span class="k">NULL</span>
+</span><span class='line'><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>  <span class="o">|</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="k">c</span><span class="p">]</span>  <span class="o">|</span> <span class="k">NULL</span>
+</span><span class='line'><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="k">c</span><span class="p">]</span>  <span class="o">|</span> <span class="p">[</span><span class="k">c</span><span class="p">,</span> <span class="n">z</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Rearranging a little for better understanding:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">numbers</span> <span class="o">|</span> <span class="n">letters</span> <span class="o">|</span> <span class="n">included</span> <span class="k">in</span>
+</span><span class='line'><span class="c1">--------|---------|-----------</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span>  <span class="o">|</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>  <span class="o">|</span> <span class="k">Full</span><span class="p">,</span> <span class="k">Inner</span><span class="p">,</span> <span class="k">Left</span> <span class="k">and</span> <span class="k">Right</span>
+</span><span class='line'><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>  <span class="o">|</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span>  <span class="o">|</span> <span class="k">Full</span><span class="p">,</span> <span class="k">Inner</span><span class="p">,</span> <span class="k">Left</span> <span class="k">and</span> <span class="k">Right</span>
+</span><span class='line'><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="k">c</span><span class="p">]</span>  <span class="o">|</span> <span class="p">[</span><span class="k">c</span><span class="p">,</span> <span class="n">z</span><span class="p">]</span>  <span class="o">|</span> <span class="k">Full</span><span class="p">,</span> <span class="k">Inner</span><span class="p">,</span> <span class="k">Left</span> <span class="k">and</span> <span class="k">Right</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span>  <span class="o">|</span> <span class="k">NULL</span>    <span class="o">|</span> <span class="k">Full</span> <span class="k">and</span> <span class="k">Left</span>
+</span><span class='line'><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>  <span class="o">|</span> <span class="k">NULL</span>    <span class="o">|</span> <span class="k">Full</span> <span class="k">and</span> <span class="k">Left</span>
+</span><span class='line'><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="k">c</span><span class="p">]</span>  <span class="o">|</span> <span class="k">NULL</span>    <span class="o">|</span> <span class="k">Full</span> <span class="k">and</span> <span class="k">Left</span>
+</span><span class='line'><span class="k">NULL</span>    <span class="o">|</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>  <span class="o">|</span> <span class="k">Full</span> <span class="k">and</span> <span class="k">Right</span>
+</span><span class='line'><span class="k">NULL</span>    <span class="o">|</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span>  <span class="o">|</span> <span class="k">Full</span> <span class="k">and</span> <span class="k">Right</span>
+</span><span class='line'><span class="k">NULL</span>    <span class="o">|</span> <span class="p">[</span><span class="k">c</span><span class="p">,</span> <span class="n">z</span><span class="p">]</span>  <span class="o">|</span> <span class="k">Full</span> <span class="k">and</span> <span class="k">Right</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Functions are Sets</h2>
+
+<p>That sounded nice, but it&rsquo;s not true. Functions aren&rsquo;t sets, they <em>operate</em> on sets.  Remember, a single value is also a set, so each function takes a set as an argument, and returns a set.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">anything</span><span class="p">.</span><span class="n">today</span>
+</span><span class='line'><span class="k">FROM</span>
+</span><span class='line'><span class="p">(</span> <span class="k">SELECT</span> <span class="n">now</span><span class="p">()</span> <span class="k">AS</span> <span class="n">today</span> <span class="p">)</span> <span class="k">AS</span> <span class="n">anything</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>My apologies for dropping a query on you without any domain context, but consider this slightly more complex function, which returns all the sibling branches of a given restaurant branch.  Restaurant has many Restaurant Branches, and Restaurant Branch belongs to a Restaurant, to aid your understanding.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">co_branches</span><span class="p">(</span><span class="n">branch_id</span> <span class="nb">BIGINT</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">RETURNS</span> <span class="k">TABLE</span><span class="p">(</span><span class="n">id</span> <span class="nb">BIGINT</span><span class="p">)</span>
+</span><span class='line'><span class="k">AS</span> <span class="err">$</span><span class="k">function</span><span class="err">$</span>
+</span><span class='line'><span class="k">SELECT</span> <span class="n">b2</span><span class="p">.</span><span class="n">id</span>
+</span><span class='line'><span class="k">FROM</span>
+</span><span class='line'>  <span class="n">restaurant_branches</span> <span class="n">b1</span>
+</span><span class='line'>  <span class="k">JOIN</span> <span class="n">restaurant_branches</span> <span class="n">b2</span> <span class="k">ON</span> <span class="n">b1</span><span class="p">.</span><span class="n">restaurant_id</span> <span class="o">=</span> <span class="n">b2</span><span class="p">.</span><span class="n">restaurant_id</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="n">b1</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">branch_id</span><span class="p">;</span>
+</span><span class='line'><span class="err">$</span><span class="k">function</span><span class="err">$</span>
+</span><span class='line'><span class="k">LANGUAGE</span> <span class="k">SQL</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">--- used simply:</span>
+</span><span class='line'><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">COBRANCHES</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="c1">-- Co-branches of Branch#42</span>
+</span><span class='line'><span class="c1">--- But more powerful, when used like:</span>
+</span><span class='line'><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">COBRANCHES</span><span class="p">(</span><span class="n">id</span><span class="p">))</span> <span class="k">as</span> <span class="n">branch_count</span> <span class="k">FROM</span> <span class="n">restaurant_branches</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Another assertion is in order: <strong>Sets and set operations tend to compose well.</strong>  Functional programming nerds practically live by this motto.  Fundamentally, SQL is not so different.  An important thing to keep in mind that this composing behaviour is mainly about the data and how the data is interpreted. The query language itself leaves a lot to be desired when it comes to composing.  A lot of things like aliases, joins can easily be taken care by a competent library.  More or on this, and the advantages of using something like ARel in a later post.</p>
+
+<h2>Reading is destructuring, Writing is composing</h2>
+
+<p>Let&rsquo;s collect all the set-like behaviour we&rsquo;ve seen so far:</p>
+
+<ul>
+<li>We can interact with a set by looking at all or some of its elements</li>
+<li>A subset of a set is <em>also a set</em> in itself</li>
+<li>A set can have a label or an alias</li>
+<li>A set can be a that of a single element as well</li>
+<li>A set can be unioned or intersected with another set</li>
+</ul>
+
+
+<p>Reading or writing complex queries becomes much easier, if we think of it as composing queries together, or decomposing a large query into smaller parts.</p>
+
+<h3>How to read complex queries</h3>
+
+<ul>
+<li>Start with the innermost, or smallest &ldquo;SELECT&rdquo; clauses</li>
+<li>Replace them with an appropriately and descriptively named function, say <code>co_branches_of_given_branch</code> instead of just <code>co_branches</code>.
+
+<ul>
+<li>If these inner queries, now functions, use a column / value from the outer queries, treat them as function arguments. ( <code>co_branches</code> used <code>branch_id</code> )</li>
+</ul>
+</li>
+<li>Keep applying this method until you reach the outermost query.</li>
+</ul>
+
+
+<h3>How to write complex queries</h3>
+
+<p>This really boils down to a top-down vs bottom-up approach. If you&rsquo;re a top-down person:
+&ndash; Write the top-most query, assume all the lower level functions exist, with appropriate and descriptive names.
+&ndash; Recursively, apply the same strategy to each lower level function</p>
+
+<p>Conversely, if you&rsquo;re a bottom-up person:
+&ndash; Figure out the lowest level functions / queries you need, and write them
+&ndash; Build up your larger query by composing these functions.</p>
+
+<!-- Links and footnotes -->
+
+
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>Food for thought: How many nested select queries does your favourite relational database allow?<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2017-08-19T11:36:19+05:30" pubdate data-updated="true">Aug 19<span>th</span>, 2017</time></div>
+	
+
+<div class="tags">
+
+	<a class='category' href='/blog/categories/relational-algebra/'>relational-algebra</a>, <a class='category' href='/blog/categories/sets/'>sets</a>, <a class='category' href='/blog/categories/sql/'>sql</a>
+
+</div>
+
+
+	
+		<span class="comments"><a href="/blog/2017/08/19/deconstructing-sql-queries/#disqus_thread">Comments</a></span>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+<!---	<a class="addthis_counter addthis_pill_style"></a> --->
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2017
+
+    Swanand Pagnis
+
+<br>
+Powered by Octopress.
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'pagnis';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://swanandp.github.io/blog/2017/08/19/deconstructing-sql-queries/';
+        var disqus_url = 'http://swanandp.github.io/blog/2017/08/19/deconstructing-sql-queries/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-46877851-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>
