@@ -4,7 +4,7 @@
   <title><![CDATA[Swanand Pagnis]]></title>
   <link href="http://swanandp.github.io/atom.xml" rel="self"/>
   <link href="http://swanandp.github.io/"/>
-  <updated>2017-08-21T15:32:57+05:30</updated>
+  <updated>2017-08-22T11:05:51+05:30</updated>
   <id>http://swanandp.github.io/</id>
   <author>
     <name><![CDATA[Swanand Pagnis]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Deconstructing SQL Queries]]></title>
+    <title type="html"><![CDATA[Demystifying SQL Queries]]></title>
     <link href="http://swanandp.github.io/blog/2017/08/19/deconstructing-sql-queries/"/>
     <updated>2017-08-19T11:36:19+05:30</updated>
     <id>http://swanandp.github.io/blog/2017/08/19/deconstructing-sql-queries</id>
@@ -40,7 +40,7 @@
 
 <h2>Tables are sets</h2>
 
-<p>The bare minimum way of interacting with a set is to take a look at all or some of its elements. That is exactly what this query is doing. We&rsquo;re selecting a subset of a set elements based on a few conditions, and representing each element of this subset in some format.  Recall that a subset of a set is <em>also a set</em> in itself.  Which allows us to do something like:</p>
+<p>The bare minimum way of interacting with a set, is to take a look at <em>some or all</em> of its elements. That is exactly what this query is doing. We&rsquo;re selecting a subset of a set, based on a few conditions, and representing each element of this subset in some format.  Recall that a subset of a set is <em>also a set</em> in itself.  Which allows us to do something like:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -59,8 +59,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>We have a nested query, where instead of selecting from a table, we&rsquo;re selecting from the result of selecting from a table. <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>
-Sets can have labels or aliases, so:</p>
+<p>We have a nested query, where instead of selecting from a table, we&rsquo;re selecting from the result of selecting from a table. <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+
+<p>Sets can have labels or aliases, so:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -79,7 +80,9 @@ Sets can have labels or aliases, so:</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>An assertion is in order: <strong>a select query operates upon a set, and returns a set</strong>.  Naturally, a set can be a that of a single element as well.</p>
+<p>We seem to be doing some recursive looking stuff, and I find it beautiful.</p>
+
+<p>Which also means, an assertion is in order: <strong>a select query operates upon a set, and returns a set</strong>.  Naturally, a set can be a that of a single element as well.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -103,7 +106,7 @@ Sets can have labels or aliases, so:</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Sets can be unioned or intersected:</p>
+<p>So a select query operates upon a set, and returns a set, and we know that sets can be unioned or intersected:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -126,11 +129,16 @@ Sets can have labels or aliases, so:</p>
 
 <h2>Joins are Sets</h2>
 
-<p>Let&rsquo;s talk about joins.  Chances are, at some point in life you&rsquo;ve written in INNER JOIN instead of an OUTER JOIN and got incorrect results.  Or something along those lines.  Joins can be very opaque, even to a regular practitioner.
-A few things are important when considering joins:
-1. A join is a product of 2 sets. Always. Multi-table joins are just &ldquo;first join these two&rdquo;, &ldquo;take the result&rdquo; and &ldquo;join the result with the next&rdquo;.
-2. Joins are always performed on sets.  So you can &ldquo;join&rdquo; any of the above mentioned sets, and you&rsquo;re still good. Do note that language semantics dictate that you use aliases to disambiguate.
-3. NULL is always a part of each set.  Implicitly so, for practicality.</p>
+<p>Let&rsquo;s talk about joins.  Chances are, at some point in life you&rsquo;ve written in INNER JOIN instead of an OUTER JOIN and got incorrect results.  Or something along those lines.  Joins can be very opaque, even to a regular practitioner.</p>
+
+<p>A few things are important when considering joins:</p>
+
+<ol>
+<li>A join is a product of 2 sets. Always. Multi-table joins are just &ldquo;first join these two&rdquo;, &ldquo;take the result&rdquo; and &ldquo;join the result with the next&rdquo;.</li>
+<li>Joins are always performed on sets.  So you can &ldquo;join&rdquo; any of the above mentioned sets, and you&rsquo;re still good. Do note that language semantics dictate that you use aliases to disambiguate.</li>
+<li>NULL is always a part of each set.  Implicitly so, for practicality.</li>
+</ol>
+
 
 <p>This is best explained through an example:</p>
 
@@ -281,7 +289,7 @@ A slightly better example:</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Rearranging a little for better understanding:</p>
+<p>Rearranging a little, for better understanding:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -308,9 +316,13 @@ A slightly better example:</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>Left and Right are determined from the join syntax.  When A joins B, A is Left, and B is Right.</p>
+
+<p>While attempting to write a join query, I encourage you to work out your join on paper first, with dummy data.  Specially with multi-table joins.</p>
+
 <h2>Functions are Sets</h2>
 
-<p>That sounded nice, but it&rsquo;s not true. Functions aren&rsquo;t sets, they <em>operate</em> on sets.  Remember, a single value is also a set, so each function takes a set as an argument, and returns a set.</p>
+<p>That sounded nice, but it isn&rsquo;t true. Functions aren&rsquo;t sets, they <em>operate</em> on sets.  Remember, a single value is also a set, so <strong>each function accepts a set as an argument, and returns a set</strong>.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -338,14 +350,18 @@ A slightly better example:</p>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
 </pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">FUNCTION</span> <span class="n">co_branches</span><span class="p">(</span><span class="n">branch_id</span> <span class="nb">BIGINT</span><span class="p">)</span>
 </span><span class='line'>  <span class="k">RETURNS</span> <span class="k">TABLE</span><span class="p">(</span><span class="n">id</span> <span class="nb">BIGINT</span><span class="p">)</span>
 </span><span class='line'><span class="k">AS</span> <span class="err">$</span><span class="k">function</span><span class="err">$</span>
+</span><span class='line'>
 </span><span class='line'><span class="k">SELECT</span> <span class="n">b2</span><span class="p">.</span><span class="n">id</span>
 </span><span class='line'><span class="k">FROM</span>
 </span><span class='line'>  <span class="n">restaurant_branches</span> <span class="n">b1</span>
 </span><span class='line'>  <span class="k">JOIN</span> <span class="n">restaurant_branches</span> <span class="n">b2</span> <span class="k">ON</span> <span class="n">b1</span><span class="p">.</span><span class="n">restaurant_id</span> <span class="o">=</span> <span class="n">b2</span><span class="p">.</span><span class="n">restaurant_id</span>
 </span><span class='line'><span class="k">WHERE</span> <span class="n">b1</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">branch_id</span><span class="p">;</span>
+</span><span class='line'>
 </span><span class='line'><span class="err">$</span><span class="k">function</span><span class="err">$</span>
 </span><span class='line'><span class="k">LANGUAGE</span> <span class="k">SQL</span><span class="p">;</span>
 </span><span class='line'>
@@ -356,7 +372,11 @@ A slightly better example:</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Another assertion is in order: <strong>Sets and set operations tend to compose well.</strong>  Functional programming nerds practically live by this motto.  Fundamentally, SQL is not so different.  An important thing to keep in mind that this composing behaviour is mainly about the data and how the data is interpreted. The query language itself leaves a lot to be desired when it comes to composing.  A lot of things like aliases, joins can easily be taken care by a competent library.  More or on this, and the advantages of using something like ARel in a later post.</p>
+<p>We&rsquo;re basically replacing a query with a function.  And we learned that both SELECT queries and Functions operate on sets, and return sets.</p>
+
+<p>Which brings me to another assertion: <strong>Sets and set operations tend to compose well.</strong>  This is very important! Functional programming nerds practically live by this motto.  Once you have small units that compose well, you can build complex units with relative simplicity.</p>
+
+<p>Fundamentally, SQL is not so different.  An important thing to keep in mind that this composing behaviour is mainly about the data and how the data is interpreted and processed. The query language itself leaves a lot to be desired when it comes to composing.  A lot of things like aliases, joins can easily be taken care by a competent library.  But, more or on this, and the advantages of using something like ARel in a later post.</p>
 
 <h2>Reading is destructuring, Writing is composing</h2>
 
