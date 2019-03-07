@@ -2,51 +2,51 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://swanandp.github.io/blog/2014/01/08/hello/</loc>
-        <lastmod>2017-06-15T21:35:45+05:30</lastmod>
+        <lastmod>2018-11-08T20:11:55+05:30</lastmod>
     </url>
     <url>
         <loc>http://swanandp.github.io/blog/2014/02/09/i-am-speaking-at-rubyconf-india/</loc>
-        <lastmod>2017-06-19T12:48:26+05:30</lastmod>
+        <lastmod>2018-11-08T20:11:55+05:30</lastmod>
     </url>
     <url>
         <loc>http://swanandp.github.io/blog/2014/04/28/console-repl-for-your-gems/</loc>
-        <lastmod>2017-06-19T12:49:59+05:30</lastmod>
+        <lastmod>2018-11-08T20:11:55+05:30</lastmod>
     </url>
     <url>
         <loc>http://swanandp.github.io/blog/2014/05/06/10-actions-you-must-internalize/</loc>
-        <lastmod>2017-06-19T13:27:49+05:30</lastmod>
+        <lastmod>2018-11-08T20:11:55+05:30</lastmod>
     </url>
     <url>
         <loc>http://swanandp.github.io/blog/2017/06/18/postgres-text-search-simple-adequate/</loc>
-        <lastmod>2017-06-20T15:01:52+05:30</lastmod>
+        <lastmod>2018-11-08T20:11:55+05:30</lastmod>
     </url>
     <url>
         <loc>http://swanandp.github.io/blog/2017/07/08/consuming-http-apis-in-ruby/</loc>
-        <lastmod>2017-07-11T18:09:22+05:30</lastmod>
+        <lastmod>2018-11-08T20:11:55+05:30</lastmod>
     </url>
     <url>
         <loc>http://swanandp.github.io/blog/2017/08/19/deconstructing-sql-queries/</loc>
-        <lastmod>2017-08-22T11:05:50+05:30</lastmod>
-    </url>
-    <url>
-        <loc>http://swanandp.github.io/about/</loc>
-        <lastmod>2017-06-19T12:34:23+05:30</lastmod>
-    </url>
-    <url>
-        <loc>http://swanandp.github.io/archives/</loc>
-        <lastmod>2017-08-22T11:05:50+05:30</lastmod>
-    </url>
-    <url>
-        <loc>http://swanandp.github.io/blog/archives/</loc>
-        <lastmod>2017-08-22T11:05:50+05:30</lastmod>
-    </url>
-    <url>
-        <loc>http://swanandp.github.io/blog/</loc>
-        <lastmod>2017-08-22T11:05:50+05:30</lastmod>
+        <lastmod>2018-11-08T20:11:55+05:30</lastmod>
     </url>
     <url>
         <loc>http://swanandp.github.io/</loc>
-        <lastmod>2017-08-22T11:05:50+05:30</lastmod>
+        <lastmod>2018-11-08T20:11:55+05:30</lastmod>
+    </url>
+    <url>
+        <loc>http://swanandp.github.io/archives/</loc>
+        <lastmod>2018-11-08T20:11:55+05:30</lastmod>
+    </url>
+    <url>
+        <loc>http://swanandp.github.io/about/</loc>
+        <lastmod>2018-11-08T20:11:55+05:30</lastmod>
+    </url>
+    <url>
+        <loc>http://swanandp.github.io/blog/</loc>
+        <lastmod>2018-11-08T20:11:55+05:30</lastmod>
+    </url>
+    <url>
+        <loc>http://swanandp.github.io/blog/archives/</loc>
+        <lastmod>2018-11-08T20:11:55+05:30</lastmod>
     </url>
     <url>
         <loc>http://swanandp.github.io/robots.txt</loc>
