@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: relational-algebra | Swanand Pagnis]]></title>
-  <link href="http://swanandp.github.io/blog/categories/relational-algebra/atom.xml" rel="self"/>
-  <link href="http://swanandp.github.io/"/>
-  <updated>2020-06-05T00:35:44+05:30</updated>
-  <id>http://swanandp.github.io/</id>
+  <link href="http://info.pagnis.in/blog/categories/relational-algebra/atom.xml" rel="self"/>
+  <link href="http://info.pagnis.in/"/>
+  <updated>2020-06-06T19:55:13+05:30</updated>
+  <id>http://info.pagnis.in/</id>
   <author>
     <name><![CDATA[Swanand Pagnis]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Demystifying SQL Queries]]></title>
-    <link href="http://swanandp.github.io/blog/2017/08/19/deconstructing-sql-queries/"/>
+    <link href="http://info.pagnis.in/blog/2017/08/19/deconstructing-sql-queries/"/>
     <updated>2017-08-19T11:36:19+05:30</updated>
-    <id>http://swanandp.github.io/blog/2017/08/19/deconstructing-sql-queries</id>
+    <id>http://info.pagnis.in/blog/2017/08/19/deconstructing-sql-queries</id>
     <content type="html"><![CDATA[<p>Let&rsquo;s look at an average, everyday SQL query:</p>
 
 <p><code>sql

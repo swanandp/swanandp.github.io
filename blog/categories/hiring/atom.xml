@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: hiring | Swanand Pagnis]]></title>
-  <link href="http://swanandp.github.io/blog/categories/hiring/atom.xml" rel="self"/>
-  <link href="http://swanandp.github.io/"/>
-  <updated>2020-06-05T00:35:44+05:30</updated>
-  <id>http://swanandp.github.io/</id>
+  <link href="http://info.pagnis.in/blog/categories/hiring/atom.xml" rel="self"/>
+  <link href="http://info.pagnis.in/"/>
+  <updated>2020-06-06T19:55:13+05:30</updated>
+  <id>http://info.pagnis.in/</id>
   <author>
     <name><![CDATA[Swanand Pagnis]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[A Job Post from the Past]]></title>
-    <link href="http://swanandp.github.io/blog/2020/06/04/a-job-post-from-the-past/"/>
+    <link href="http://info.pagnis.in/blog/2020/06/04/a-job-post-from-the-past/"/>
     <updated>2020-06-04T20:38:32+05:30</updated>
-    <id>http://swanandp.github.io/blog/2020/06/04/a-job-post-from-the-past</id>
+    <id>http://info.pagnis.in/blog/2020/06/04/a-job-post-from-the-past</id>
     <content type="html"><![CDATA[<p>Back in 2019, I wrote a job post that I soon became fond of. Proud even. It received healthy attention and consistent praise:</p>
 
 <ul>

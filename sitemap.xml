@@ -1,63 +1,63 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://swanandp.github.io/blog/2014/01/08/hello/</loc>
+        <loc>http://info.pagnis.in/blog/2014/01/08/hello/</loc>
         <lastmod>2019-03-08T19:48:27+05:30</lastmod>
     </url>
     <url>
-        <loc>http://swanandp.github.io/blog/2014/02/09/i-am-speaking-at-rubyconf-india/</loc>
+        <loc>http://info.pagnis.in/blog/2014/02/09/i-am-speaking-at-rubyconf-india/</loc>
         <lastmod>2019-03-08T19:48:27+05:30</lastmod>
     </url>
     <url>
-        <loc>http://swanandp.github.io/blog/2014/04/28/console-repl-for-your-gems/</loc>
+        <loc>http://info.pagnis.in/blog/2014/04/28/console-repl-for-your-gems/</loc>
         <lastmod>2019-03-08T19:48:27+05:30</lastmod>
     </url>
     <url>
-        <loc>http://swanandp.github.io/blog/2014/05/06/10-actions-you-must-internalize/</loc>
+        <loc>http://info.pagnis.in/blog/2014/05/06/10-actions-you-must-internalize/</loc>
         <lastmod>2019-03-08T19:48:27+05:30</lastmod>
     </url>
     <url>
-        <loc>http://swanandp.github.io/blog/2017/06/18/postgres-text-search-simple-adequate/</loc>
+        <loc>http://info.pagnis.in/blog/2017/06/18/postgres-text-search-simple-adequate/</loc>
         <lastmod>2019-03-08T19:48:27+05:30</lastmod>
     </url>
     <url>
-        <loc>http://swanandp.github.io/blog/2017/07/08/consuming-http-apis-in-ruby/</loc>
+        <loc>http://info.pagnis.in/blog/2017/07/08/consuming-http-apis-in-ruby/</loc>
         <lastmod>2019-03-08T19:48:27+05:30</lastmod>
     </url>
     <url>
-        <loc>http://swanandp.github.io/blog/2017/08/19/deconstructing-sql-queries/</loc>
+        <loc>http://info.pagnis.in/blog/2017/08/19/deconstructing-sql-queries/</loc>
         <lastmod>2019-03-08T19:48:27+05:30</lastmod>
     </url>
     <url>
-        <loc>http://swanandp.github.io/blog/2020/05/31/spending-less/</loc>
-        <lastmod>2020-06-01T12:30:38+05:30</lastmod>
+        <loc>http://info.pagnis.in/blog/2020/05/31/spending-less/</loc>
+        <lastmod>2020-06-06T19:54:10+05:30</lastmod>
     </url>
     <url>
-        <loc>http://swanandp.github.io/blog/2020/06/04/a-job-post-from-the-past/</loc>
+        <loc>http://info.pagnis.in/blog/2020/06/04/a-job-post-from-the-past/</loc>
         <lastmod>2020-06-05T00:07:37+05:30</lastmod>
     </url>
     <url>
-        <loc>http://swanandp.github.io/</loc>
-        <lastmod>2020-06-05T00:07:37+05:30</lastmod>
+        <loc>http://info.pagnis.in/</loc>
+        <lastmod>2020-06-06T19:54:10+05:30</lastmod>
     </url>
     <url>
-        <loc>http://swanandp.github.io/archives/</loc>
-        <lastmod>2020-06-05T00:07:37+05:30</lastmod>
+        <loc>http://info.pagnis.in/archives/</loc>
+        <lastmod>2020-06-06T19:54:10+05:30</lastmod>
     </url>
     <url>
-        <loc>http://swanandp.github.io/about/</loc>
+        <loc>http://info.pagnis.in/about/</loc>
         <lastmod>2020-06-05T00:33:40+05:30</lastmod>
     </url>
     <url>
-        <loc>http://swanandp.github.io/blog/</loc>
-        <lastmod>2020-06-05T00:07:37+05:30</lastmod>
+        <loc>http://info.pagnis.in/blog/</loc>
+        <lastmod>2020-06-06T19:54:10+05:30</lastmod>
     </url>
     <url>
-        <loc>http://swanandp.github.io/blog/archives/</loc>
-        <lastmod>2020-06-05T00:07:37+05:30</lastmod>
+        <loc>http://info.pagnis.in/blog/archives/</loc>
+        <lastmod>2020-06-06T19:54:10+05:30</lastmod>
     </url>
     <url>
-        <loc>http://swanandp.github.io/robots.txt</loc>
+        <loc>http://info.pagnis.in/robots.txt</loc>
         <lastmod>2014-01-08T14:34:07+05:30</lastmod>
     </url>
 </urlset>

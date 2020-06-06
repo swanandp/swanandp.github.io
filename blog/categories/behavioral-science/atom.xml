@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: behavioral-science | Swanand Pagnis]]></title>
-  <link href="http://swanandp.github.io/blog/categories/behavioral-science/atom.xml" rel="self"/>
-  <link href="http://swanandp.github.io/"/>
-  <updated>2020-06-05T00:35:44+05:30</updated>
-  <id>http://swanandp.github.io/</id>
+  <link href="http://info.pagnis.in/blog/categories/behavioral-science/atom.xml" rel="self"/>
+  <link href="http://info.pagnis.in/"/>
+  <updated>2020-06-06T19:55:13+05:30</updated>
+  <id>http://info.pagnis.in/</id>
   <author>
     <name><![CDATA[Swanand Pagnis]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Behavioral Science and the Art of Spending Less]]></title>
-    <link href="http://swanandp.github.io/blog/2020/05/31/spending-less/"/>
+    <link href="http://info.pagnis.in/blog/2020/05/31/spending-less/"/>
     <updated>2020-05-31T20:30:05+05:30</updated>
-    <id>http://swanandp.github.io/blog/2020/05/31/spending-less</id>
+    <id>http://info.pagnis.in/blog/2020/05/31/spending-less</id>
     <content type="html"><![CDATA[<p>There are four popular ways of growing your wealth:</p>
 
 <ol>
@@ -53,6 +53,10 @@
 <li><em>Ability</em> to perform the action</li>
 </ol>
 
+
+<p><img src="http://info.pagnis.in/assets/b-eq-map_small@2x.jpg" alt="Fogg Behavior Model" width="75%" /></p>
+
+<p><sub>Image used with appropriate permission from BJ Fogg</sub></p>
 
 <p>Some examples:</p>
 

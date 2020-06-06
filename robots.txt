@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://swanandp.github.io/sitemap.xml 
+Sitemap: http://info.pagnis.in/sitemap.xml 

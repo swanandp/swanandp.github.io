@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Swanand Pagnis]]></title>
-  <link href="http://swanandp.github.io/atom.xml" rel="self"/>
-  <link href="http://swanandp.github.io/"/>
-  <updated>2020-06-05T00:35:44+05:30</updated>
-  <id>http://swanandp.github.io/</id>
+  <link href="http://info.pagnis.in/atom.xml" rel="self"/>
+  <link href="http://info.pagnis.in/"/>
+  <updated>2020-06-06T19:55:13+05:30</updated>
+  <id>http://info.pagnis.in/</id>
   <author>
     <name><![CDATA[Swanand Pagnis]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[A Job Post from the Past]]></title>
-    <link href="http://swanandp.github.io/blog/2020/06/04/a-job-post-from-the-past/"/>
+    <link href="http://info.pagnis.in/blog/2020/06/04/a-job-post-from-the-past/"/>
     <updated>2020-06-04T20:38:32+05:30</updated>
-    <id>http://swanandp.github.io/blog/2020/06/04/a-job-post-from-the-past</id>
+    <id>http://info.pagnis.in/blog/2020/06/04/a-job-post-from-the-past</id>
     <content type="html"><![CDATA[<p>Back in 2019, I wrote a job post that I soon became fond of. Proud even. It received healthy attention and consistent praise:</p>
 
 <ul>
@@ -119,9 +119,9 @@
   
   <entry>
     <title type="html"><![CDATA[Behavioral Science and the Art of Spending Less]]></title>
-    <link href="http://swanandp.github.io/blog/2020/05/31/spending-less/"/>
+    <link href="http://info.pagnis.in/blog/2020/05/31/spending-less/"/>
     <updated>2020-05-31T20:30:05+05:30</updated>
-    <id>http://swanandp.github.io/blog/2020/05/31/spending-less</id>
+    <id>http://info.pagnis.in/blog/2020/05/31/spending-less</id>
     <content type="html"><![CDATA[<p>There are four popular ways of growing your wealth:</p>
 
 <ol>
@@ -157,6 +157,10 @@
 <li><em>Ability</em> to perform the action</li>
 </ol>
 
+
+<p><img src="http://info.pagnis.in/assets/b-eq-map_small@2x.jpg" alt="Fogg Behavior Model" width="75%" /></p>
+
+<p><sub>Image used with appropriate permission from BJ Fogg</sub></p>
 
 <p>Some examples:</p>
 
@@ -210,9 +214,9 @@
   
   <entry>
     <title type="html"><![CDATA[Demystifying SQL Queries]]></title>
-    <link href="http://swanandp.github.io/blog/2017/08/19/deconstructing-sql-queries/"/>
+    <link href="http://info.pagnis.in/blog/2017/08/19/deconstructing-sql-queries/"/>
     <updated>2017-08-19T11:36:19+05:30</updated>
-    <id>http://swanandp.github.io/blog/2017/08/19/deconstructing-sql-queries</id>
+    <id>http://info.pagnis.in/blog/2017/08/19/deconstructing-sql-queries</id>
     <content type="html"><![CDATA[<p>Let&rsquo;s look at an average, everyday SQL query:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -629,9 +633,9 @@ A slightly better example:</p>
   
   <entry>
     <title type="html"><![CDATA[Consuming HTTP APIs in Ruby]]></title>
-    <link href="http://swanandp.github.io/blog/2017/07/08/consuming-http-apis-in-ruby/"/>
+    <link href="http://info.pagnis.in/blog/2017/07/08/consuming-http-apis-in-ruby/"/>
     <updated>2017-07-08T18:07:41+05:30</updated>
-    <id>http://swanandp.github.io/blog/2017/07/08/consuming-http-apis-in-ruby</id>
+    <id>http://info.pagnis.in/blog/2017/07/08/consuming-http-apis-in-ruby</id>
     <content type="html"><![CDATA[<p>What is your favourite technique for consuming HTTP APIs in Ruby?  I like using <a href="https://github.com/jnunemaker/httparty">HTTParty</a>!</p>
 
 <ul>
@@ -953,9 +957,9 @@ A slightly better example:</p>
   
   <entry>
     <title type="html"><![CDATA[Postgres Text Search: Simple, Adequate]]></title>
-    <link href="http://swanandp.github.io/blog/2017/06/18/postgres-text-search-simple-adequate/"/>
+    <link href="http://info.pagnis.in/blog/2017/06/18/postgres-text-search-simple-adequate/"/>
     <updated>2017-06-18T00:00:00+05:30</updated>
-    <id>http://swanandp.github.io/blog/2017/06/18/postgres-text-search-simple-adequate</id>
+    <id>http://info.pagnis.in/blog/2017/06/18/postgres-text-search-simple-adequate</id>
     <content type="html"><![CDATA[<p>Searching for text within your data is a frequently requested feature, and often leads to excellent UX.  Gmail&rsquo;s web interface is entirely built on top of search. No wonder databases have supported basic text search operators like ~, LIKE, ILIKE etc for a long time.  But they often fall short or give inaccurate results, as we try to evolve the feature.  Say, searching in multiple languages, or searching for different variants of the same word: consider realistically, realistic, and realist, or <a href="https://www.google.co.in/#q=ruby+-jewel">searching one word, but not the other</a>.</p>
 
 <p>This is where full-text search comes in.  <!-- more --> Postgres ships with excellent full-text search capabilities which allow us to implement text search in our application without incurring additional dependencies and operational overhead.  More over, having a built-in search allows us to compose search with other existing queries and procedures.  When I say excellent capabilities, I mean fully-featured.  And when I say fully-featured, I mean that it supports stemming, search relevance, search highlights, fuzzy matching, and multiple languages.</p>
@@ -1410,9 +1414,9 @@ A slightly better example:</p>
   
   <entry>
     <title type="html"><![CDATA[10 actions you must internalize in your Editor]]></title>
-    <link href="http://swanandp.github.io/blog/2014/05/06/10-actions-you-must-internalize/"/>
+    <link href="http://info.pagnis.in/blog/2014/05/06/10-actions-you-must-internalize/"/>
     <updated>2014-05-06T10:45:07+05:30</updated>
-    <id>http://swanandp.github.io/blog/2014/05/06/10-actions-you-must-internalize</id>
+    <id>http://info.pagnis.in/blog/2014/05/06/10-actions-you-must-internalize</id>
     <content type="html"><![CDATA[<p>We love our Emacs vs Vim vs &lt;others&gt; debates.  In one argument Emacs rocks, in another Vim wins the day and in some other, TextMate takes the cake.  However, more than we love our editors, we love being productive; after all that is all what this is about.  By now, we know that the joy of writing code is well augmented by a good editor. It acts like a great force multiplier.  We go to great lengths to curate the editor &amp; its configuration to what suits us.</p>
 
 <p>What happens when you want to use a different editor? <!-- more --> Or the same editor with different dotfiles?  They say that opening an editor and finding someone else&rsquo;s dotfiles is like going to bed and finding someone else&rsquo;s partner there.  From the outset, looks like an extremely awkward and uncomfortable experience. But, great if you were looking to switch.  So how do you learn an editor in order to be effective enough; enough being the keyword here?  The short answer to this is &ldquo;do the grunt work and put in the time&rdquo;.  However, I think all is not lost and learning a few actions as the first thing can save you a lot of time.  I often keep a cheat sheet ready with these actions in order to build the required muscle memory.</p>
@@ -1447,9 +1451,9 @@ A slightly better example:</p>
   
   <entry>
     <title type="html"><![CDATA[Console your gems: Add REPL to them]]></title>
-    <link href="http://swanandp.github.io/blog/2014/04/28/console-repl-for-your-gems/"/>
+    <link href="http://info.pagnis.in/blog/2014/04/28/console-repl-for-your-gems/"/>
     <updated>2014-04-28T12:27:34+05:30</updated>
-    <id>http://swanandp.github.io/blog/2014/04/28/console-repl-for-your-gems</id>
+    <id>http://info.pagnis.in/blog/2014/04/28/console-repl-for-your-gems</id>
     <content type="html"><![CDATA[<p>When you are working on a Ruby gem or a Ruby library ( why you would have a Ruby library that isn&rsquo;t a gem is beyond me ), it is <s>always</s> often desirable to have a Pry session loaded with the gem your working on.  In fact, I&rsquo;ll go out on a limb and say that REPL driven development is a a must-do when writing libraries.  REPLs are like ice added to your beer when it isn&rsquo;t cold anymore, except this ice is made from the same beer.</p>
 
 <!-- more -->
@@ -1540,9 +1544,9 @@ A slightly better example:</p>
   
   <entry>
     <title type="html"><![CDATA[I am speaking at RubyConf India]]></title>
-    <link href="http://swanandp.github.io/blog/2014/02/09/i-am-speaking-at-rubyconf-india/"/>
+    <link href="http://info.pagnis.in/blog/2014/02/09/i-am-speaking-at-rubyconf-india/"/>
     <updated>2014-02-09T23:45:07+05:30</updated>
-    <id>http://swanandp.github.io/blog/2014/02/09/i-am-speaking-at-rubyconf-india</id>
+    <id>http://info.pagnis.in/blog/2014/02/09/i-am-speaking-at-rubyconf-india</id>
     <content type="html"><![CDATA[<p><a href="http://rubyconfindia.org/2014">India&rsquo;s premier Ruby conference</a> is happening at Goa this year, in the third week of March.  This year, my talk proposal got accepted and I am up on <a href="http://rubyconfindia2014.busyconf.com/schedule#activity_52cce8d8852da40010000095">day 1 at 2.30pm</a>.</p>
 
 <!-- more -->
@@ -1562,9 +1566,9 @@ A slightly better example:</p>
   
   <entry>
     <title type="html"><![CDATA[Hello, world!]]></title>
-    <link href="http://swanandp.github.io/blog/2014/01/08/hello/"/>
+    <link href="http://info.pagnis.in/blog/2014/01/08/hello/"/>
     <updated>2014-01-08T14:49:26+05:30</updated>
-    <id>http://swanandp.github.io/blog/2014/01/08/hello</id>
+    <id>http://info.pagnis.in/blog/2014/01/08/hello</id>
     <content type="html"><![CDATA[<p>Wikipedia tells us:</p>
 
 <blockquote><p>A &ldquo;Hello World&rdquo; program has become the traditional first program that many people learn. In general, it is simple enough so that people who have no experience with computer programming can easily understand it, especially with the guidance of a teacher or a written guide. Using this simple program as a basis, computer science principles or elements of a specific programming language can be explained to novice programmers. Experienced programmers learning new languages can also gain a lot of information about a given language&rsquo;s syntax and structure from a hello world program.</p></blockquote>

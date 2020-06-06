@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ruby | Swanand Pagnis]]></title>
-  <link href="http://swanandp.github.io/blog/categories/ruby/atom.xml" rel="self"/>
-  <link href="http://swanandp.github.io/"/>
-  <updated>2020-06-05T00:35:44+05:30</updated>
-  <id>http://swanandp.github.io/</id>
+  <link href="http://info.pagnis.in/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://info.pagnis.in/"/>
+  <updated>2020-06-06T19:55:13+05:30</updated>
+  <id>http://info.pagnis.in/</id>
   <author>
     <name><![CDATA[Swanand Pagnis]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Consuming HTTP APIs in Ruby]]></title>
-    <link href="http://swanandp.github.io/blog/2017/07/08/consuming-http-apis-in-ruby/"/>
+    <link href="http://info.pagnis.in/blog/2017/07/08/consuming-http-apis-in-ruby/"/>
     <updated>2017-07-08T18:07:41+05:30</updated>
-    <id>http://swanandp.github.io/blog/2017/07/08/consuming-http-apis-in-ruby</id>
+    <id>http://info.pagnis.in/blog/2017/07/08/consuming-http-apis-in-ruby</id>
     <content type="html"><![CDATA[<p>What is your favourite technique for consuming HTTP APIs in Ruby?  I like using <a href="https://github.com/jnunemaker/httparty">HTTParty</a>!</p>
 
 <ul>

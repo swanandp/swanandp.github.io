@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: productivity | Swanand Pagnis]]></title>
-  <link href="http://swanandp.github.io/blog/categories/productivity/atom.xml" rel="self"/>
-  <link href="http://swanandp.github.io/"/>
-  <updated>2020-06-05T00:35:44+05:30</updated>
-  <id>http://swanandp.github.io/</id>
+  <link href="http://info.pagnis.in/blog/categories/productivity/atom.xml" rel="self"/>
+  <link href="http://info.pagnis.in/"/>
+  <updated>2020-06-06T19:55:13+05:30</updated>
+  <id>http://info.pagnis.in/</id>
   <author>
     <name><![CDATA[Swanand Pagnis]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[10 actions you must internalize in your Editor]]></title>
-    <link href="http://swanandp.github.io/blog/2014/05/06/10-actions-you-must-internalize/"/>
+    <link href="http://info.pagnis.in/blog/2014/05/06/10-actions-you-must-internalize/"/>
     <updated>2014-05-06T10:45:07+05:30</updated>
-    <id>http://swanandp.github.io/blog/2014/05/06/10-actions-you-must-internalize</id>
+    <id>http://info.pagnis.in/blog/2014/05/06/10-actions-you-must-internalize</id>
     <content type="html"><![CDATA[<p>We love our Emacs vs Vim vs &lt;others&gt; debates.  In one argument Emacs rocks, in another Vim wins the day and in some other, TextMate takes the cake.  However, more than we love our editors, we love being productive; after all that is all what this is about.  By now, we know that the joy of writing code is well augmented by a good editor. It acts like a great force multiplier.  We go to great lengths to curate the editor &amp; its configuration to what suits us.</p>
 
 <p>What happens when you want to use a different editor? <!-- more --> Or the same editor with different dotfiles?  They say that opening an editor and finding someone else&rsquo;s dotfiles is like going to bed and finding someone else&rsquo;s partner there.  From the outset, looks like an extremely awkward and uncomfortable experience. But, great if you were looking to switch.  So how do you learn an editor in order to be effective enough; enough being the keyword here?  The short answer to this is &ldquo;do the grunt work and put in the time&rdquo;.  However, I think all is not lost and learning a few actions as the first thing can save you a lot of time.  I often keep a cheat sheet ready with these actions in order to build the required muscle memory.</p>

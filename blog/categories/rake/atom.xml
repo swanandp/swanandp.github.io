@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: rake | Swanand Pagnis]]></title>
-  <link href="http://swanandp.github.io/blog/categories/rake/atom.xml" rel="self"/>
-  <link href="http://swanandp.github.io/"/>
-  <updated>2020-06-05T00:35:44+05:30</updated>
-  <id>http://swanandp.github.io/</id>
+  <link href="http://info.pagnis.in/blog/categories/rake/atom.xml" rel="self"/>
+  <link href="http://info.pagnis.in/"/>
+  <updated>2020-06-06T19:55:13+05:30</updated>
+  <id>http://info.pagnis.in/</id>
   <author>
     <name><![CDATA[Swanand Pagnis]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Console your gems: Add REPL to them]]></title>
-    <link href="http://swanandp.github.io/blog/2014/04/28/console-repl-for-your-gems/"/>
+    <link href="http://info.pagnis.in/blog/2014/04/28/console-repl-for-your-gems/"/>
     <updated>2014-04-28T12:27:34+05:30</updated>
-    <id>http://swanandp.github.io/blog/2014/04/28/console-repl-for-your-gems</id>
+    <id>http://info.pagnis.in/blog/2014/04/28/console-repl-for-your-gems</id>
     <content type="html"><![CDATA[<p>When you are working on a Ruby gem or a Ruby library ( why you would have a Ruby library that isn&rsquo;t a gem is beyond me ), it is <s>always</s> often desirable to have a Pry session loaded with the gem your working on.  In fact, I&rsquo;ll go out on a limb and say that REPL driven development is a a must-do when writing libraries.  REPLs are like ice added to your beer when it isn&rsquo;t cold anymore, except this ice is made from the same beer.</p>
 
 <!-- more -->
