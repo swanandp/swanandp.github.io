@@ -2,59 +2,63 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://info.pagnis.in/blog/2014/01/08/hello/</loc>
-        <lastmod>2020-06-09T22:19:11+05:30</lastmod>
+        <lastmod>2020-07-11T23:52:05+05:30</lastmod>
     </url>
     <url>
         <loc>http://info.pagnis.in/blog/2014/02/09/i-am-speaking-at-rubyconf-india/</loc>
-        <lastmod>2019-03-08T19:48:27+05:30</lastmod>
+        <lastmod>2020-07-11T23:52:05+05:30</lastmod>
     </url>
     <url>
         <loc>http://info.pagnis.in/blog/2014/04/28/console-repl-for-your-gems/</loc>
-        <lastmod>2019-03-08T19:48:27+05:30</lastmod>
+        <lastmod>2020-07-11T23:52:05+05:30</lastmod>
     </url>
     <url>
         <loc>http://info.pagnis.in/blog/2014/05/06/10-actions-you-must-internalize/</loc>
-        <lastmod>2019-03-08T19:48:27+05:30</lastmod>
+        <lastmod>2020-07-11T23:52:05+05:30</lastmod>
     </url>
     <url>
         <loc>http://info.pagnis.in/blog/2017/06/18/postgres-text-search-simple-adequate/</loc>
-        <lastmod>2019-03-08T19:48:27+05:30</lastmod>
+        <lastmod>2020-07-11T23:52:05+05:30</lastmod>
     </url>
     <url>
         <loc>http://info.pagnis.in/blog/2017/07/08/consuming-http-apis-in-ruby/</loc>
-        <lastmod>2019-03-08T19:48:27+05:30</lastmod>
+        <lastmod>2020-07-11T23:52:05+05:30</lastmod>
     </url>
     <url>
         <loc>http://info.pagnis.in/blog/2017/08/19/deconstructing-sql-queries/</loc>
-        <lastmod>2019-03-08T19:48:27+05:30</lastmod>
+        <lastmod>2020-07-11T23:52:05+05:30</lastmod>
     </url>
     <url>
         <loc>http://info.pagnis.in/blog/2020/05/31/spending-less/</loc>
-        <lastmod>2020-06-08T11:42:26+05:30</lastmod>
+        <lastmod>2020-07-11T23:52:05+05:30</lastmod>
     </url>
     <url>
         <loc>http://info.pagnis.in/blog/2020/06/04/a-job-post-from-the-past/</loc>
-        <lastmod>2020-06-05T00:07:37+05:30</lastmod>
+        <lastmod>2020-07-11T23:52:05+05:30</lastmod>
+    </url>
+    <url>
+        <loc>http://info.pagnis.in/blog/2020/07/11/notes-from-developer-entrepreneur-talk/</loc>
+        <lastmod>2020-07-11T23:52:05+05:30</lastmod>
     </url>
     <url>
         <loc>http://info.pagnis.in/</loc>
-        <lastmod>2020-06-09T22:19:11+05:30</lastmod>
+        <lastmod>2020-07-11T23:52:05+05:30</lastmod>
     </url>
     <url>
         <loc>http://info.pagnis.in/archives/</loc>
-        <lastmod>2020-06-09T22:19:11+05:30</lastmod>
+        <lastmod>2020-07-11T23:52:05+05:30</lastmod>
     </url>
     <url>
         <loc>http://info.pagnis.in/about/</loc>
-        <lastmod>2020-06-05T00:33:40+05:30</lastmod>
+        <lastmod>2020-07-11T23:52:05+05:30</lastmod>
     </url>
     <url>
         <loc>http://info.pagnis.in/blog/</loc>
-        <lastmod>2020-06-09T22:19:11+05:30</lastmod>
+        <lastmod>2020-07-11T23:52:05+05:30</lastmod>
     </url>
     <url>
         <loc>http://info.pagnis.in/blog/archives/</loc>
-        <lastmod>2020-06-09T22:19:11+05:30</lastmod>
+        <lastmod>2020-07-11T23:52:05+05:30</lastmod>
     </url>
     <url>
         <loc>http://info.pagnis.in/robots.txt</loc>
